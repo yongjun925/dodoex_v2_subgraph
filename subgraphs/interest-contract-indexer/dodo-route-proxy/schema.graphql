@@ -1,0 +1,30 @@
+type OrderHistory @entity {
+  " { Transaction hash }-{ Log index } "
+  id: ID!
+  " Transaction hash of the transaction that emitted this event "
+  hash: String!
+  " Event log index. For transactions that don't emit event, create arbitrary index starting from 0 "
+  logIndex: BigInt!
+  " Block number of this event "
+  blockNumber: BigInt!
+  " Timestamp of this event "
+  timestamp: BigInt!
+  "transaction input data"
+  transactionInput: Bytes!
+  "msg sender"
+  sender: Bytes!
+  "tx from address"
+  from: Bytes!
+  "from token"
+  fromToken: Bytes!
+  "to token"
+  toToken: Bytes!
+  "to address"
+  to: Bytes!
+  "from  amount"
+  fromAmount: BigInt!
+  "return amount"
+  returnAmount: BigInt!
+  "updatedAt"
+  updatedAt: BigInt
+}

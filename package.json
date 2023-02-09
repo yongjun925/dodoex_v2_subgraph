@@ -108,7 +108,11 @@
     "deploy:dodo_starter_rinkeby": "graph codegen subgraphs/starter/starter_rinkeby.yaml --output-dir ./src/types/starter/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-rinkeby subgraphs/starter/starter_rinkeby.yaml",
     "deploy:dodo_starter_bsc": "graph codegen subgraphs/starter/starter_bsc.yaml --output-dir ./src/types/starter/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-bsc subgraphs/starter/starter_bsc.yaml",
     "deploy:dodo_starter_arbitrum": "graph codegen subgraphs/starter/starter_arbitrum.yaml --output-dir ./src/types/starter/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-arbitrum subgraphs/starter/starter_arbitrum.yaml",
-    "deploy:dodo_starter_polygon": "graph codegen subgraphs/starter/starter_polygon.yaml --output-dir ./src/types/starter/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-polygon subgraphs/starter/starter_polygon.yaml"
+    "deploy:dodo_starter_polygon": "graph codegen subgraphs/starter/starter_polygon.yaml --output-dir ./src/types/starter/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-polygon subgraphs/starter/starter_polygon.yaml",
+
+    "deploy:interest-contract-indexer:dodo-route-proxy": "graph codegen subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml --output-dir ./src/types/interest-contract-indexer/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodo-route-proxy-mainnet subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml",
+
+    "deploy:local:interest-contract-indexer:dodo-route-proxy": "graph codegen subgraphs/interest-contract-indexer/dodo-route-proxy/arbitrum.yaml --output-dir ./src/types/interest-contract-indexer/  && graph deploy --debug --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020 dodo-route-proxy-arbitrum subgraphs/interest-contract-indexer/dodo-route-proxy/arbitrum.yaml"
   },
   "devDependencies": {
     "@graphprotocol/graph-ts": "0.20.1",

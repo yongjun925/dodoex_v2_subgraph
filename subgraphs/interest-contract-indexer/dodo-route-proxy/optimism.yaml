@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+description: Dodoex.io
+repository: https://github.com/DODOEX/dodoex_v2_subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DODOV2Proxy02
+    network: optimism
+    source:
+      address: '0xfd9d2827ad469b72b69329daa325ba7afbdb3c98'
+      abi: DODOV2Proxy02
+      startBlock: 51212276
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
+      entities:
+        - OrderHistory
+      abis:
+        - name: DODOV2Proxy02
+          file: ../../../abis/DODOV2Proxy02.json
+      eventHandlers:
+        - event: OrderHistory(address,address,address,uint256,uint256)
+          handler: handleOrderHistory
