@@ -6,11 +6,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: DODORouteProxy
-    network: matic
+    network: mainnet
     source:
-      address: "0x2fA4334cfD7c56a0E7Ca02BD81455205FcBDc5E9"
+      address: "0xa2398842F37465f89540430bDC00219fA9E4D28a"
       abi: DODORouteProxy
-      startBlock: 41435768
+      startBlock: 17029741
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -26,11 +26,11 @@ dataSources:
           handler: handleOrderHistory
   - kind: ethereum/contract
     name: DODOV2Proxy02
-    network: matic
+    network: mainnet
     source:
-      address: "0xa222e6a71d1a1dd5f279805fbe38d5329c1d0e70"
+      address: "0xa356867fdcea8e71aeaf87805808803806231fdc"
       abi: DODOV2Proxy02
-      startBlock: 41435768
+      startBlock: 17020741
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -46,11 +46,33 @@ dataSources:
           handler: handleOrderHistory
   - kind: ethereum/contract
     name: DODOFeeRouteProxy
-    network: matic
+    network: mainnet
     source:
       address: "0x50f9bDe1c76bba997a5d6e7FEFff695ec8536194"
       abi: DODOFeeRouteProxy
-      startBlock: 41435768
+      startBlock: 17020741
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: DODORouteProxy/DODORouteProxy.wasm
+      entities:
+        - OrderHistory
+      abis:
+        - name: DODOFeeRouteProxy
+          file: ../../abis/DODOFeeRouteProxy.json
+        - name: DODOV2Proxy02
+          file: ../../abis/DODOV2Proxy02.json
+      eventHandlers:
+        - event: OrderHistory(address,address,address,uint256,uint256)
+          handler: handleOrderHistory
+  - kind: ethereum/contract
+    name: DODOFeeRouteProxyWidget
+    network: mainnet
+    source:
+      address: "0x21b9f852534fb9ddc3a0a7b24f067b50d8ac9a99"
+      abi: DODOFeeRouteProxy
+      startBlock: 17020741
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

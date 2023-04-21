@@ -128,7 +128,8 @@
 
     "deploy:interest-contract-indexer:dodo-route-proxy": "graph codegen subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml --output-dir ./src/types/interest-contract-indexer/  && graph deploy --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodo-route-proxy-mainnet subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml",
 
-    "deploy:local:interest-contract-indexer:dodo-route-proxy": "graph codegen subgraphs/interest-contract-indexer/dodo-route-proxy/polygon.yaml --output-dir ./src/types/interest-contract-indexer/  && graph deploy --debug --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020 dodo-route-proxy-polygon subgraphs/interest-contract-indexer/dodo-route-proxy/polygon.yaml"
+    "deploy:local:interest-contract-indexer:dodo-route-proxy-bsc": "graph codegen subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml --output-dir ./src/types/interest-contract-indexer/  && graph deploy --debug --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020 dodo-route-proxy-mainnet subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml",
+    "deploy:local:interest-contract-indexer:dodo-route-proxy-mainnet": "graph codegen subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml --output-dir ./src/types/interest-contract-indexer/  && graph deploy --debug --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020 dodo-route-proxy-mainnet subgraphs/interest-contract-indexer/dodo-route-proxy/mainnet.yaml"
   },
   "devDependencies": {
     "@graphprotocol/graph-ts": "0.20.1",

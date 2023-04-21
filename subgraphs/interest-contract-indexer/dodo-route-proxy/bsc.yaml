@@ -66,3 +66,25 @@ dataSources:
       eventHandlers:
         - event: OrderHistory(address,address,address,uint256,uint256)
           handler: handleOrderHistory
+  - kind: ethereum/contract
+    name: DODOFeeRouteProxyWidget
+    network: bsc
+    source:
+      address: '0xa8b034301bb5dd3610db585def3e7c0d52f2319f'
+      abi: DODOFeeRouteProxy
+      startBlock: 27266472
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
+      entities:
+        - OrderHistory
+      abis:
+        - name: DODOFeeRouteProxy
+          file: ../../../abis/DODOFeeRouteProxy.json
+        - name: DODOV2Proxy02
+          file: ../../../abis/DODOV2Proxy02.json
+      eventHandlers:
+        - event: OrderHistory(address,address,address,uint256,uint256)
+          handler: handleOrderHistory
