@@ -48,3 +48,17 @@ type UserStake @entity{
     "updatedAt"
     updatedAt:BigInt!
 }
+
+
+type UserClaim @entity{
+    "user - pool"
+    id: ID!
+    "user address"
+    user:Bytes!
+    "pool"
+    pool:Bytes!
+    "amount of reward"
+    amount:BigInt!
+    "updatedAt"
+    updatedAt:BigInt!
+}

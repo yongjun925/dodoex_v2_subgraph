@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Dodoex.io
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: 7462578
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/mineProxy.ts
       entities:
@@ -43,7 +43,7 @@ dataSources:
       startBlock: 7462578
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/registry.ts
       entities:
@@ -64,6 +64,26 @@ dataSources:
       eventHandlers:
         - event: NewMineV3(address,address,bool)
           handler: handleNewMineV3
+  - kind: ethereum/contract
+    name: DODOMineV2Factory
+    network: goerli
+    source:
+      address: '0xc7d7CC1e9f5E823887980c9C51F9c418ee3A3e28'
+      abi: DODOMineV2Factory
+      startBlock: 7462578
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../src/mappings/mine/factory.ts
+      entities:
+        - MinePool
+      abis:
+        - name: DODOMineV2Factory
+          file: ../../abis/DODOMineV2Factory.json
+      eventHandlers:
+        - event: NewMineV2(address,address)
+          handler: handleNewMineV2
 templates:
   - kind: ethereum/contract
     name: ERC20MineV3
@@ -72,7 +92,7 @@ templates:
       abi: ERC20MineV3
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/mine.ts
       entities:
@@ -91,3 +111,21 @@ templates:
           handler: handleUpdateEndBlock
         - event: UpdateReward(indexed uint256,uint256)
           handler: handleUpdateReward
+  - kind: ethereum/contract
+    name: ERC20Mine
+    network: goerli
+    source:
+      abi: ERC20Mine
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../src/mappings/mine/erc20.ts
+      entities:
+        - MinePool
+      abis:
+        - name: ERC20Mine
+          file: ../../abis/ERC20Mine.json
+      eventHandlers:
+        - event: Claim(indexed uint256,indexed address,uint256)
+          handler: handleClaim
