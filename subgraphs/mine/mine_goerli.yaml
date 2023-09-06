@@ -120,7 +120,7 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ../../src/mappings/mine/erc20.ts
+      file: ../../src/mappings/mine/erc20Mine.ts
       entities:
         - MinePool
       abis:
@@ -129,3 +129,5 @@ templates:
       eventHandlers:
         - event: Claim(indexed uint256,indexed address,uint256)
           handler: handleClaim
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
