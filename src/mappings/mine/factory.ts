@@ -1,6 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { NewMineV2 } from "../../types/mine/DODOMineV2Factory/DODOMineV2Factory";
 import { MinePool, RewardDetail } from "../../types/mine/schema";
+import { ERC20MineV3 as ERC20MineV3Template } from "../../types/mine/templates";
 import { ERC20Mine, ERC20Mine__rewardTokenInfosResult } from "../../types/mine/templates/ERC20Mine/ERC20Mine";
 
 function rewardTokenInfos(address: Address, index) {
@@ -26,6 +27,7 @@ export function handleNewMineV2(event: NewMineV2): void {
     minePool.stakeToken = event.params.stakeToken;
     minePool.updatedAt = event.block.timestamp;
     minePool.save();
+    ERC20MineV3Template.create(event.params.mine);
 
     const rewardTokensNum = getRewardNum(event.address);
     for (let i = 0; i < rewardTokensNum.toI32(); i++) {
