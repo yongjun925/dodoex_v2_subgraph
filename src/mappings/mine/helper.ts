@@ -1,5 +1,5 @@
-import {ERC20MineV3, ERC20MineV3__rewardTokenInfosResult} from "../../types/mine/DODOMineV3Proxy/ERC20MineV3"
-import {Address, BigInt} from "@graphprotocol/graph-ts"
+import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { ERC20MineV3, ERC20MineV3__rewardTokenInfosResult } from "../../types/mine/DODOMineV3ProxyV2/ERC20MineV3";
 
 export function getRewardNum(address: Address): BigInt {
     let contract = ERC20MineV3.bind(address);

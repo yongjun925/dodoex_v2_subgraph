@@ -1,4 +1,4 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 description: Dodoex.io
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
@@ -78,6 +78,7 @@ dataSources:
       file: ../../src/mappings/mine/factory.ts
       entities:
         - MinePool
+        - RewardDetail
       abis:
         - name: DODOMineV2Factory
           file: ../../abis/DODOMineV2Factory.json
@@ -122,7 +123,8 @@ templates:
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/erc20Mine.ts
       entities:
-        - MinePool
+        - UserClaim
+        - UserStake
       abis:
         - name: ERC20Mine
           file: ../../abis/ERC20Mine.json

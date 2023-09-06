@@ -1,10 +1,10 @@
-import { MinePool, RewardDetail } from "../../types/mine/schema";
-import { CreateMineV3 } from "../../types/mine/DODOMineV3Proxy/DODOMineV3Proxy";
+import { CreateMineV3 } from "../../types/mine/DODOMineV3ProxyV2/DODOMineV3Proxy";
 import { CreateMineV3 as V2CreateMineV3 } from "../../types/mine/DODOMineV3ProxyV2/DODOMineV3ProxyV2";
+import { MinePool, RewardDetail } from "../../types/mine/schema";
 import { ERC20MineV3 as ERC20MineV3Template } from "../../types/mine/templates";
 
-import { getRewardNum, rewardTokenInfos, getToken } from "./helper";
 import { BigInt, log } from "@graphprotocol/graph-ts";
+import { getRewardNum, getToken, rewardTokenInfos } from "./helper";
 
 export function handleCreateMineV3(event: CreateMineV3): void {
   let minePool = MinePool.load(event.params.mineV3.toHexString());

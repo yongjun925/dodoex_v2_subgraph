@@ -4,7 +4,7 @@ import { MinePool, RewardDetail } from "../../types/mine/schema";
 import { ERC20MineV3 as ERC20MineV3Template } from "../../types/mine/templates";
 import { ERC20Mine, ERC20Mine__rewardTokenInfosResult } from "../../types/mine/templates/ERC20Mine/ERC20Mine";
 
-function rewardTokenInfos(address: Address, index) {
+function rewardTokenInfos(address: Address, index: BigInt): ERC20Mine__rewardTokenInfosResult {
     const contract = ERC20Mine.bind(address);
     const rewardTokenInfosResult = contract.rewardTokenInfos(index);
     return rewardTokenInfosResult as ERC20Mine__rewardTokenInfosResult;
