@@ -17,7 +17,7 @@ program.option("-i, --ipfs <endpoint>", "ipfs server endpoint");
 program.option("-n, --node <endpoint>", "node server endpoint");
 program.option("-c, --chain <name>", "block chain");
 program.option("-a, --alpha", "is alpha");
-program.option("-d, --debug", "is debug", true);
+program.option("-d, --debug", "is debug", false);
 program.option("-y, --yaml <name>", "yaml file name");
 program.option("-u, --accesstoken <token>", "access token");
 
@@ -65,7 +65,7 @@ async function run() {
         choices: [
           "avatar",
           "dodoex",
-          "mime",
+          "mine",
           "nft",
           "starter",
           "token",
