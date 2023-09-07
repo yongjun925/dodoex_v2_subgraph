@@ -379,8 +379,10 @@ function getDefaultConfig() {
       "graph codegen subgraphs/starter/starter_arbitrum.yaml --output-dir ./src/types/starter/  && graph deploy --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-arbitrum subgraphs/starter/starter_arbitrum.yaml",
     "deploy:dodo_starter_polygon":
       "graph codegen subgraphs/starter/starter_polygon.yaml --output-dir ./src/types/starter/  && graph deploy --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ dodoex/dodoex-starter-polygon subgraphs/starter/starter_polygon.yaml",
+    "deploy:studio:mine_goerli:thegraph":
+      "graph codegen subgraphs/mine/mine_goerli.yaml --output-dir ./src/types/mine/  && graph deploy --ipfs https://api.thegraph.com/ipfs/ --node https://api.studio.thegraph.com/deploy/ v3 subgraphs/mine/mine_goerli.yaml",
     "deploy:studio:mine_goerli":
-      "graph codegen subgraphs/mine/mine_goerli.yaml --output-dir ./src/types/mine/  && graph deploy --node https://api.studio.thegraph.com/deploy/ v3 subgraphs/mine/mine_goerli.yaml",
+      "graph codegen subgraphs/mine/mine_goerli.yaml --output-dir ./src/types/mine/  && graph deploy --ipfs http://localhost:5001/ --node http://localhost:8020/ dodoex/v3test subgraphs/mine/mine_goerli.yaml",
   };
   return config2;
 }
