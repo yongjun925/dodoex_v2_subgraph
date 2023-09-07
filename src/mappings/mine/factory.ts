@@ -1,7 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { NewMineV2 } from "../../types/mine/DODOMineV2Factory/DODOMineV2Factory";
 import { MinePool, RewardDetail } from "../../types/mine/schema";
-import { ERC20MineV3 as ERC20MineV3Template } from "../../types/mine/templates";
+import { ERC20Mine as ERC20MineTemplate } from "../../types/mine/templates";
 import { ERC20Mine, ERC20Mine__rewardTokenInfosResult } from "../../types/mine/templates/ERC20Mine/ERC20Mine";
 
 function rewardTokenInfos(address: Address, index: BigInt): ERC20Mine__rewardTokenInfosResult {
@@ -25,14 +25,15 @@ export function handleNewMineV2(event: NewMineV2): void {
     }
     minePool.pool = event.params.mine;
     minePool.stakeToken = event.params.stakeToken;
+    minePool.timestamp = event.block.timestamp;
     minePool.updatedAt = event.block.timestamp;
     minePool.save();
-    ERC20MineV3Template.create(event.params.mine);
+    ERC20MineTemplate.create(event.params.mine);
 
-    const rewardTokensNum = getRewardNum(event.address);
+    const rewardTokensNum = getRewardNum(event.params.mine);
     for (let i = 0; i < rewardTokensNum.toI32(); i++) {
-        const rewardData = rewardTokenInfos(event.address, BigInt.fromI32(i));
-        const detailID = event.address
+        const rewardData = rewardTokenInfos(event.params.mine, BigInt.fromI32(i));
+        const detailID = event.params.mine
           .toHexString()
           .concat("-")
           .concat(rewardData.value0.toHexString());

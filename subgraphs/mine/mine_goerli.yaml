@@ -82,6 +82,8 @@ dataSources:
       abis:
         - name: DODOMineV2Factory
           file: ../../abis/DODOMineV2Factory.json
+        - name: ERC20Mine
+          file: ../../abis/ERC20Mine.json
       eventHandlers:
         - event: NewMineV2(address,address)
           handler: handleNewMineV2
