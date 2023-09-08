@@ -49,7 +49,6 @@ type UserStake @entity{
     updatedAt:BigInt!
 }
 
-
 type UserClaim @entity{
     "user - pool"
     id: ID!
@@ -58,6 +57,19 @@ type UserClaim @entity{
     "pool"
     pool:Bytes!
     "amount of reward"
+    amount:BigInt!
+    "updatedAt"
+    updatedAt:BigInt!
+}
+
+type UserWithdraw @entity{
+    "user - pool"
+    id: ID!
+    "user address"
+    user:Bytes!
+    "pool"
+    pool:Bytes!
+    "balance"
     amount:BigInt!
     "updatedAt"
     updatedAt:BigInt!

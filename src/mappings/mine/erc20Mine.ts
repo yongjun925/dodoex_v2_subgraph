@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
-import { UserClaim, UserStake } from "../../types/mine/schema";
-import { Claim, Deposit } from "../../types/mine/templates/ERC20Mine/ERC20Mine";
+import { UserClaim, UserStake, UserWithdraw } from "../../types/mine/schema";
+import { Claim, Deposit, Withdraw } from "../../types/mine/templates/ERC20Mine/ERC20Mine";
 
 export function handleClaim(event: Claim): void {
   let id = event.params.user
@@ -34,4 +34,22 @@ export function handleDeposit(event: Deposit): void {
   userClaim.balance = userClaim.balance.plus(event.params.amount);
   userClaim.updatedAt = event.block.timestamp;
   userClaim.save();
+}
+
+
+export function handleWithdraw(event: Withdraw): void {
+  let id = event.params.user
+    .toHexString()
+    .concat("-")
+    .concat(event.address.toHexString());
+  let userWithdraw = UserWithdraw.load(id);
+  if (userWithdraw == null) {
+    userWithdraw = new UserWithdraw(id);
+    userWithdraw.user = event.params.user;
+    userWithdraw.pool = event.address;
+    userWithdraw.amount = BigInt.fromI32(0);
+  }
+  userWithdraw.amount = userWithdraw.amount.plus(event.params.amount);
+  userWithdraw.updatedAt = event.block.timestamp;
+  userWithdraw.save();
 }
