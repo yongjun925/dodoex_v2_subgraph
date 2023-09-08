@@ -1,29 +1,30 @@
-specVersion: 0.0.4
+specVersion: 0.0.5
 description: Dodoex.io
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
-  file: token.graphql
+  file: mine.graphql
 dataSources:
   - kind: ethereum/contract
-    name: ERC20Factory
-    network: bsc
+    name: DODOMineV3ProxyV2
+    network: goerli
     source:
-      address: "0x5e84190a270333aCe5B9202a3F4ceBf11b81bB01"
-      abi: ERC20Factory
-      startBlock: 4201536
+      address: "0x99d69565EdA438E3ebAA0627A407968ABD0f755b"
+      abi: DODOMineV3ProxyV2
+      startBlock: 7462578
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ERC20Factory/ERC20Factory.wasm
+      file: DODOMineV3ProxyV2/DODOMineV3ProxyV2.wasm
       entities:
-        - User
-        - Token
-        - UserTokenBlance
-        - TransferHistories
+        - MinePool
       abis:
-        - name: ERC20Factory
-          file: ../abis/ERC20Factory.json
+        - name: DODOMineV3Proxy
+          file: ../abis/DODOMineV3Proxy.json
+        - name: DODOMineV3ProxyV2
+          file: ../abis/DODOMineV3ProxyV2.json
+        - name: ERC20MineV3
+          file: ../abis/ERC20MineV3.json
         - name: ERC20
           file: ../abis/ERC20.json
         - name: ERC20SymbolBytes
@@ -31,30 +32,29 @@ dataSources:
         - name: ERC20NameBytes
           file: ../abis/ERC20NameBytes.json
       eventHandlers:
-        - event: NewERC20(address,address,bool)
-          handler: handleNewERC20
+        - event: CreateMineV3(address,address,uint256)
+          handler: handleV2CreateMineV3
   - kind: ethereum/contract
-    name: ERC20V2FactoryV2
-    network: bsc
+    name: DODOMineV3Registry
+    network: goerli
     source:
-      address: "0x652C09785c15db4adAce871eD8874b8968A19A4D"
-      abi: ERC20V2Factory
-      startBlock: 4201536
+      address: "0x4632e6EBd4a01eBF54739A9D71a62CEdb29E9183"
+      abi: DODOMineV3Registry
+      startBlock: 7462578
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ERC20V2FactoryV2/ERC20V2FactoryV2.wasm
+      file: DODOMineV3Registry/DODOMineV3Registry.wasm
       entities:
-        - User
-        - Token
-        - UserTokenBlance
-        - TransferHistories
+        - MinePool
       abis:
-        - name: ERC20Factory
-          file: ../abis/ERC20Factory.json
-        - name: ERC20V2Factory
-          file: ../abis/ERC20V2Factory.json
+        - name: DODOMineV3Proxy
+          file: ../abis/DODOMineV3Proxy.json
+        - name: DODOMineV3Registry
+          file: ../abis/DODOMineV3Registry.json
+        - name: ERC20MineV3
+          file: ../abis/ERC20MineV3.json
         - name: ERC20
           file: ../abis/ERC20.json
         - name: ERC20SymbolBytes
@@ -62,38 +62,76 @@ dataSources:
         - name: ERC20NameBytes
           file: ../abis/ERC20NameBytes.json
       eventHandlers:
-        - event: NewERC20(address,address,uint256)
-          handler: handleNewERC20
+        - event: NewMineV3(address,address,bool)
+          handler: handleNewMineV3
   - kind: ethereum/contract
-    name: ERC20V3Factory
-    network: bsc
+    name: DODOMineV2Factory
+    network: goerli
     source:
-      address: "0x5ed22a48fee263207f5caae1a1f1a27011e7dc92"
-      abi: ERC20V3Factory
-      startBlock: 15440112
+      address: "0xc7d7CC1e9f5E823887980c9C51F9c418ee3A3e28"
+      abi: DODOMineV2Factory
+      startBlock: 7462578
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ERC20V2FactoryV2/ERC20V2FactoryV2.wasm
+      file: DODOMineV2Factory/DODOMineV2Factory.wasm
       entities:
-        - User
-        - Token
-        - UserTokenBlance
-        - TransferHistories
+        - MinePool
+        - RewardDetail
       abis:
-        - name: ERC20Factory
-          file: ../abis/ERC20Factory.json
-        - name: ERC20V2Factory
-          file: ../abis/ERC20V2Factory.json
-        - name: ERC20V3Factory
-          file: ../abis/ERC20V3Factory.json
-        - name: ERC20
-          file: ../abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ../abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ../abis/ERC20NameBytes.json
+        - name: DODOMineV2Factory
+          file: ../abis/DODOMineV2Factory.json
+        - name: ERC20Mine
+          file: ../abis/ERC20Mine.json
       eventHandlers:
-        - event: NewERC20(address,address,uint256)
-          handler: handleNewERC20
+        - event: NewMineV2(address,address)
+          handler: handleNewMineV2
+templates:
+  - kind: ethereum/contract
+    name: ERC20MineV3
+    network: goerli
+    source:
+      abi: ERC20MineV3
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: templates/ERC20MineV3/ERC20MineV3.wasm
+      entities:
+        - MinePool
+      abis:
+        - name: ERC20MineV3
+          file: ../abis/ERC20MineV3.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+        - event: NewRewardToken(indexed uint256,address)
+          handler: handleNewRewardToken
+        - event: UpdateEndBlock(indexed uint256,uint256)
+          handler: handleUpdateEndBlock
+        - event: UpdateReward(indexed uint256,uint256)
+          handler: handleUpdateReward
+  - kind: ethereum/contract
+    name: ERC20Mine
+    network: goerli
+    source:
+      abi: ERC20Mine
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: templates/ERC20Mine/ERC20Mine.wasm
+      entities:
+        - UserClaim
+        - UserStake
+      abis:
+        - name: ERC20Mine
+          file: ../abis/ERC20Mine.json
+      eventHandlers:
+        - event: Claim(indexed uint256,indexed address,uint256)
+          handler: handleClaim
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
