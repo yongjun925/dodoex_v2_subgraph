@@ -7,6 +7,7 @@ export function handleClaim(event: Claim): void {
     .toHexString()
     .concat("-")
     .concat(event.address.toHexString());
+    
   let userClaim = UserClaim.load(id);
   if (userClaim == null) {
     userClaim = new UserClaim(id);
@@ -24,16 +25,17 @@ export function handleDeposit(event: Deposit): void {
     .toHexString()
     .concat("-")
     .concat(event.address.toHexString());
-  let userClaim = UserStake.load(id);
-  if (userClaim == null) {
-    userClaim = new UserStake(id);
-    userClaim.user = event.params.user;
-    userClaim.pool = event.address;
-    userClaim.balance = BigInt.fromI32(0);
+
+  let userStake = UserStake.load(id);
+  if (userStake == null) {
+    userStake = new UserStake(id);
+    userStake.user = event.params.user;
+    userStake.pool = event.address;
+    userStake.balance = BigInt.fromI32(0);
   }
-  userClaim.balance = userClaim.balance.plus(event.params.amount);
-  userClaim.updatedAt = event.block.timestamp;
-  userClaim.save();
+  userStake.balance = userStake.balance.plus(event.params.amount);
+  userStake.updatedAt = event.block.timestamp;
+  userStake.save();
 }
 
 
@@ -42,6 +44,7 @@ export function handleWithdraw(event: Withdraw): void {
     .toHexString()
     .concat("-")
     .concat(event.address.toHexString());
+    
   let userWithdraw = UserWithdraw.load(id);
   if (userWithdraw == null) {
     userWithdraw = new UserWithdraw(id);
@@ -52,4 +55,15 @@ export function handleWithdraw(event: Withdraw): void {
   userWithdraw.amount = userWithdraw.amount.plus(event.params.amount);
   userWithdraw.updatedAt = event.block.timestamp;
   userWithdraw.save();
+
+  let userStake = UserStake.load(id);
+  if (userStake == null) {
+    userStake = new UserStake(id);
+    userStake.user = event.params.user;
+    userStake.pool = event.address;
+    userStake.balance = BigInt.fromI32(0);
+  }
+  userStake.balance = userStake.balance.minus(userWithdraw.amount)
+  userStake.updatedAt = event.block.timestamp;
+  userStake.save(); 
 }
