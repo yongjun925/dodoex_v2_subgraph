@@ -92,6 +92,29 @@ dataSources:
       eventHandlers:
         - event: NewMineV3(address,address,bool)
           handler: handleNewMineV3
+  - kind: ethereum/contract
+    name: DODOMineV2Factory
+    network: bsc
+    source:
+      address: '0x4e306ABc37724f006b216b802408340bF2a8b641'
+      abi: DODOMineV2Factory
+      startBlock: 7989977
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../src/mappings/mine/factory.ts
+      entities:
+        - MinePool
+        - RewardDetail
+      abis:
+        - name: DODOMineV2Factory
+          file: ../../abis/DODOMineV2Factory.json
+        - name: ERC20Mine
+          file: ../../abis/ERC20Mine.json
+      eventHandlers:
+        - event: NewMineV2(address,address)
+          handler: handleNewMineV2
 templates:
   - kind: ethereum/contract
     name: ERC20MineV3
@@ -119,3 +142,26 @@ templates:
           handler: handleUpdateEndBlock
         - event: UpdateReward(indexed uint256,uint256)
           handler: handleUpdateReward
+  - kind: ethereum/contract
+    name: ERC20Mine
+    network: bsc
+    source:
+      abi: ERC20Mine
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../src/mappings/mine/erc20Mine.ts
+      entities:
+        - UserClaim
+        - UserStake
+      abis:
+        - name: ERC20Mine
+          file: ../../abis/ERC20Mine.json
+      eventHandlers:
+        - event: Claim(indexed uint256,indexed address,uint256)
+          handler: handleClaim
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw

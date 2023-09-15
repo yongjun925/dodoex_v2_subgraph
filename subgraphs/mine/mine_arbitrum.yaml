@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.5
 description: Dodoex.io
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: 226000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/mineProxy.ts
       entities:
@@ -41,7 +41,7 @@ dataSources:
       startBlock: 1
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/registry.ts
       entities:
@@ -62,6 +62,29 @@ dataSources:
       eventHandlers:
         - event: NewMineV3(address,address,bool)
           handler: handleNewMineV3
+  - kind: ethereum/contract
+    name: DODOMineV2Factory
+    network: arbitrum-one
+    source:
+      address: '0x5a2e2278a0faccf224ced1ce809ec4e4b1708759'
+      abi: DODOMineV2Factory
+      startBlock: 226594
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../src/mappings/mine/factory.ts
+      entities:
+        - MinePool
+        - RewardDetail
+      abis:
+        - name: DODOMineV2Factory
+          file: ../../abis/DODOMineV2Factory.json
+        - name: ERC20Mine
+          file: ../../abis/ERC20Mine.json
+      eventHandlers:
+        - event: NewMineV2(address,address)
+          handler: handleNewMineV2
 templates:
   - kind: ethereum/contract
     name: ERC20MineV3
@@ -70,7 +93,7 @@ templates:
       abi: ERC20MineV3
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../src/mappings/mine/mine.ts
       entities:
@@ -85,3 +108,26 @@ templates:
           handler: handleWithdraw
         - event: NewRewardToken(indexed uint256,address)
           handler: handleNewRewardToken
+  - kind: ethereum/contract
+    name: ERC20Mine
+    network: arbitrum-one
+    source:
+      abi: ERC20Mine
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../src/mappings/mine/erc20Mine.ts
+      entities:
+        - UserClaim
+        - UserStake
+      abis:
+        - name: ERC20Mine
+          file: ../../abis/ERC20Mine.json
+      eventHandlers:
+        - event: Claim(indexed uint256,indexed address,uint256)
+          handler: handleClaim
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw

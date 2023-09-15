@@ -1,28 +1,26 @@
-specVersion: 0.0.5
+specVersion: 0.0.4
 description: Dodoex.io
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
   file: mine.graphql
 dataSources:
   - kind: ethereum/contract
-    name: DODOMineV3ProxyV2
-    network: goerli
+    name: DODOMineV3Proxy
+    network: matic
     source:
-      address: "0x99d69565EdA438E3ebAA0627A407968ABD0f755b"
-      abi: DODOMineV3ProxyV2
-      startBlock: 7462578
+      address: "0x47a65e74dd6b6b5e3243dbb01eded9d55ba234ad"
+      abi: DODOMineV3Proxy
+      startBlock: 17462462
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: DODOMineV3ProxyV2/DODOMineV3ProxyV2.wasm
+      file: DODOMineV3Proxy/DODOMineV3Proxy.wasm
       entities:
         - MinePool
       abis:
         - name: DODOMineV3Proxy
           file: ../abis/DODOMineV3Proxy.json
-        - name: DODOMineV3ProxyV2
-          file: ../abis/DODOMineV3ProxyV2.json
         - name: ERC20MineV3
           file: ../abis/ERC20MineV3.json
         - name: ERC20
@@ -32,15 +30,15 @@ dataSources:
         - name: ERC20NameBytes
           file: ../abis/ERC20NameBytes.json
       eventHandlers:
-        - event: CreateMineV3(address,address,uint256)
-          handler: handleV2CreateMineV3
+        - event: CreateMineV3(address,address)
+          handler: handleCreateMineV3
   - kind: ethereum/contract
     name: DODOMineV3Registry
-    network: goerli
+    network: matic
     source:
-      address: "0x4632e6EBd4a01eBF54739A9D71a62CEdb29E9183"
+      address: "0x27566bf9504466f6f3a1571e1863da42fff4d25e"
       abi: DODOMineV3Registry
-      startBlock: 7462578
+      startBlock: 17462450
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -66,11 +64,11 @@ dataSources:
           handler: handleNewMineV3
   - kind: ethereum/contract
     name: DODOMineV2Factory
-    network: goerli
+    network: matic
     source:
-      address: "0xc7d7CC1e9f5E823887980c9C51F9c418ee3A3e28"
+      address: "0x3570911f8F675c091e616E5EFC7E5617684dccC1"
       abi: DODOMineV2Factory
-      startBlock: 7462578
+      startBlock: 23943559
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -90,7 +88,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: ERC20MineV3
-    network: goerli
+    network: matic
     source:
       abi: ERC20MineV3
     mapping:
@@ -110,13 +108,9 @@ templates:
           handler: handleWithdraw
         - event: NewRewardToken(indexed uint256,address)
           handler: handleNewRewardToken
-        - event: UpdateEndBlock(indexed uint256,uint256)
-          handler: handleUpdateEndBlock
-        - event: UpdateReward(indexed uint256,uint256)
-          handler: handleUpdateReward
   - kind: ethereum/contract
     name: ERC20Mine
-    network: goerli
+    network: matic
     source:
       abi: ERC20Mine
     mapping:
