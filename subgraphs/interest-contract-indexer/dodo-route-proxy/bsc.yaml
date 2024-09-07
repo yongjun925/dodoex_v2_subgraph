@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 description: Dodoex.io
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
@@ -13,7 +13,7 @@ dataSources:
       startBlock: 27266472
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
       entities:
@@ -33,7 +33,7 @@ dataSources:
       startBlock: 27266472
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
       entities:
@@ -53,7 +53,7 @@ dataSources:
       startBlock: 27266472
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
       entities:
@@ -75,7 +75,7 @@ dataSources:
       startBlock: 27266472
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
       entities:
@@ -88,3 +88,25 @@ dataSources:
       eventHandlers:
         - event: OrderHistory(address,address,address,uint256,uint256)
           handler: handleOrderHistory
+  - kind: ethereum/contract
+    name: DODOFeeRouteProxyWidgett-24-6-5
+    network: bsc
+    source:
+      address: '0xb95ed7e958e196688984951f41ac2888f4b10ab9'
+      abi: DODOFeeRouteProxy
+      startBlock: 39336465
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      file: ../../../src/mappings/interest-contract-indexer/dodo-route-proxy/smartRoute.ts
+      entities:
+        - OrderHistory
+      abis:
+        - name: DODOFeeRouteProxy
+          file: ../../../abis/DODOFeeRouteProxy.json
+        - name: DODOV2Proxy02
+          file: ../../../abis/DODOV2Proxy02.json
+      eventHandlers:
+        - event: OrderHistory(address,address,address,uint256,uint256)
+          handler: handleOrderHistory          
