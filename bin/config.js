@@ -34,6 +34,8 @@ const chains = [
   "zircuit",
   "sepolia",
   "okb",
+  "hashkey-testnet",
+  "zero-testnet",
 ];
 const supportAlphaChains = ["arbitrum", "polygon", "mainnet"];
 const supportStudioChains = [
