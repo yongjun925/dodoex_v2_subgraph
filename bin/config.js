@@ -19,7 +19,7 @@ const chains = [
   "avax",
   "cfx",
   "base",
-  "base_mainnet",
+  "base-mainnet",
   "scroll-alpha",
   "scroll-sepolia",
   "linea",
