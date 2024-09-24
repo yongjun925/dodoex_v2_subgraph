@@ -1,7 +1,7 @@
 specVersion: 0.0.4
 description: Dodoex.io
 graft:
-  base: QmWQ48vadnYCLimrUEaC5Jd9TtqFxYtmkQTGXUXLkG4X3a
+  base: QmbzmgbZ71JrCfjPu2niaZ2j9GdBCSFyEaW4PZoB7xCfUK
   block: 41809388
 features:
   - grafting
@@ -595,7 +595,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ../../src/mappings/dodoex/poolFactory.ts
+      file: ../../src/mappings/dodoex/poolGspFactory.ts
       entities:
         - Pair
         - Token
