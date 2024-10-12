@@ -34,6 +34,7 @@ async function codegen(contractConfig) {
   replaceAll("dodoex", contractConfig);
   replaceAll("mine", contractConfig);
   replaceAll("token", contractConfig);
+  replaceConstant(contractConfig);
 }
 
 function replaceAll(yamlName, contractConfig) {
@@ -45,16 +46,39 @@ function replaceAll(yamlName, contractConfig) {
 
   for (const key in contractConfig) {
     for (const key2 in contractConfig[key]) {
-      if (template.includes("${" + key2 + "}")) {
+      do {
         template = template.replace(
           "${" + key2 + "}",
           contractConfig[key][key2]
         );
-      }
+      } while (template.includes("${" + key2 + "}"));
     }
   }
   fs.writeFileSync(
     `${__dirname}/../subgraphs/${yamlName}/${yamlName}_${chain}.yaml`,
+    template
+  );
+}
+
+function replaceConstant(contractConfig) {
+  let template = fs
+    .readFileSync(`${__dirname}/template/constant.ts`)
+    .toString();
+  template = template.replace(/\$\{chain\}/g, chain);
+  template = template.replace(/\$\{startBlock\}/g, startBlock);
+
+  for (const key in contractConfig) {
+    for (const key2 in contractConfig[key]) {
+      do {
+        template = template.replace(
+          "${" + key2 + "}",
+          contractConfig[key][key2]
+        );
+      } while (template.includes("${" + key2 + "}"));
+    }
+  }
+  fs.writeFileSync(
+    `${__dirname}/../src/mappings/constant-${chain}.ts`,
     template
   );
 }

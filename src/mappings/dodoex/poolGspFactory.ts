@@ -75,7 +75,12 @@ export function handleNewGSP(event: NewGSP): void {
         gsp._LP_FEE_RATE_(),
         BigInt.fromI32(18)
       );
-      pair.mtFeeRateModel = gsp._MT_FEE_RATE_MODEL_();
+      let mtFeeRateModel = gsp.try__MT_FEE_RATE_MODEL_();
+      if (mtFeeRateModel.reverted == false) {
+        pair.mtFeeRateModel = mtFeeRateModel.value;
+      } else {
+        pair.mtFeeRateModel = Address.fromString(ADDRESS_ZERO);
+      }
       pair.maintainer = gsp._MAINTAINER_();
     } else {
       pair.i = ZERO_BI;

@@ -1,10 +1,10 @@
 specVersion: 0.0.4
 description: Dodoex.io
-# graft:
-#   base: QmW5QjXgnnohWuPHcsxZACbfD5kEWjP2DwxbUKiiwVH2Xw
-#   block: 20146600
-# features:
-#   - grafting
+graft:
+  base: QmUAKfHQRaxvcYMzDKtXaXRGfr64SoDVw5HWubRVfY1xEL
+  block: 19969970
+features:
+  - grafting
 repository: https://github.com/DODOEX/dodoex_v2_subgraph
 schema:
   file: ./dodoex.graphql
@@ -71,9 +71,9 @@ dataSources:
     name: DODOFeeRouteProxy-PositiveSlippage
     network: base
     source:
-      address: '0x3a64Ec3606FF7310E8fAd6FcC008e39705fB496d'
+      address: '0x8b09DB11ea380d6454D2592D334FFC319ce6EF3E'
       abi: DODOFeeRouteProxy
-      startBlock: 125565127
+      startBlock: 19969971
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -102,9 +102,9 @@ dataSources:
     name: DODOFeeRouteProxy-widgit-PositiveSlippage
     network: base
     source:
-      address: '0x8b09DB11ea380d6454D2592D334FFC319ce6EF3E'
+      address: '0x3A7Bc5F9E41356728f037f17D88c642EE46d1Aaa'
       abi: DODOFeeRouteProxy
-      startBlock: 125565127
+      startBlock: 20104015
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

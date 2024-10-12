@@ -36,6 +36,8 @@ const chains = [
   "okb",
   "hashkey-testnet",
   "zero-testnet",
+  "berachain-testnet",
+  "taiko",
 ];
 const supportAlphaChains = ["arbitrum", "polygon", "mainnet"];
 const supportStudioChains = [

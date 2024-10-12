@@ -126,7 +126,12 @@ export function handleNewDVM(event: NewDVM): void {
         dvm._LP_FEE_RATE_(),
         BigInt.fromI32(18)
       );
-      pair.mtFeeRateModel = dvm._MT_FEE_RATE_MODEL_();
+      let mtFeeRateModel = dvm.try__MT_FEE_RATE_MODEL_();
+      if (mtFeeRateModel.reverted == false) {
+        pair.mtFeeRateModel = mtFeeRateModel.value;
+      } else {
+        pair.mtFeeRateModel = Address.fromString(ADDRESS_ZERO);
+      }
       pair.maintainer = dvm._MAINTAINER_();
     } else {
       pair.i = ZERO_BI;
@@ -210,7 +215,12 @@ export function handleNewDPP(event: NewDPP): void {
         dpp._LP_FEE_RATE_(),
         BigInt.fromI32(18)
       );
-      pair.mtFeeRateModel = dpp._MT_FEE_RATE_MODEL_();
+      let mtFeeRateModel = dpp.try__MT_FEE_RATE_MODEL_();
+      if (mtFeeRateModel.reverted == false) {
+        pair.mtFeeRateModel = mtFeeRateModel.value;
+      } else {
+        pair.mtFeeRateModel = Address.fromString(ADDRESS_ZERO);
+      }
       pair.maintainer = dpp._MAINTAINER_();
     } else {
       pair.i = ZERO_BI;
@@ -302,7 +312,12 @@ export function handleNewDSP(event: NewDSP): void {
         dsp._LP_FEE_RATE_(),
         BigInt.fromI32(18)
       );
-      pair.mtFeeRateModel = dsp._MT_FEE_RATE_MODEL_();
+      let mtFeeRateModel = dsp.try__MT_FEE_RATE_MODEL_();
+      if (mtFeeRateModel.reverted == false) {
+        pair.mtFeeRateModel = mtFeeRateModel.value;
+      } else {
+        pair.mtFeeRateModel = Address.fromString(ADDRESS_ZERO);
+      }
       pair.maintainer = dsp._MAINTAINER_();
     } else {
       pair.i = ZERO_BI;
@@ -371,7 +386,12 @@ export function handleNewCP(event: NewCP): void {
     crowdPooling.vestingDuration = cp._VESTING_DURATION_();
     crowdPooling.i = cp._I_();
     crowdPooling.k = cp._K_();
-    crowdPooling.mtFeeRateModel = cp._MT_FEE_RATE_MODEL_();
+    let mtFeeRateModel = cp.try__MT_FEE_RATE_MODEL_();
+    if (mtFeeRateModel.reverted == false) {
+      crowdPooling.mtFeeRateModel = mtFeeRateModel.value;
+    } else {
+      crowdPooling.mtFeeRateModel = Address.fromString(ADDRESS_ZERO);
+    }
 
     crowdPooling.investorsCount = ZERO_BI;
     crowdPooling.totalBase = convertTokenToDecimal(
@@ -458,7 +478,12 @@ export function handleNewRegistry(event: NewRegistry): void {
         dvm._LP_FEE_RATE_(),
         BigInt.fromI32(18)
       );
-      pair.mtFeeRateModel = dvm._MT_FEE_RATE_MODEL_();
+      let mtFeeRateModel = dvm.try__MT_FEE_RATE_MODEL_();
+      if (mtFeeRateModel.reverted == false) {
+        pair.mtFeeRateModel = mtFeeRateModel.value;
+      } else {
+        pair.mtFeeRateModel = Address.fromString(ADDRESS_ZERO);
+      }
       pair.maintainer = dvm._MAINTAINER_();
     } else {
       pair.i = ZERO_BI;
