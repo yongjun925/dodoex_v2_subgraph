@@ -8,7 +8,7 @@ dataSources:
     name: DODOV2Proxy02
     network: zero_testnet
     source:
-      address: '0xE31686897831030aa57952D845f6EfE2888eA998'
+      address: '0x0D705a6967178439fE8550382D4A33f9AF4372a0'
       abi: DODOV2Proxy02
       startBlock: 1009968
     mapping:
@@ -35,7 +35,7 @@ dataSources:
     name: DODOFeeRouteProxy
     network: zero_testnet
     source:
-      address: '0x24223cA199a621c66c136bCFFB9dD81891115Df8'
+      address: '0x42b3Da4bf7941ae549B798FC79eA5b048c522071'
       abi: DODOFeeRouteProxy
       startBlock: 1009968
     mapping:
@@ -64,7 +64,7 @@ dataSources:
     name: DODOFeeRouteProxy-widgit
     network: zero_testnet
     source:
-      address: '0x3DDb52991AE329FD4103d4855dC17840221eB87f'
+      address: '0x1D46EC9e795DCB7B083531874708B9466BB382C5'
       abi: DODOFeeRouteProxy
       startBlock: 1009968
     mapping:
@@ -93,7 +93,7 @@ dataSources:
     name: DVMFactory
     network: zero_testnet
     source:
-      address: '0x22de414884AFfd6004D971E728A2d3Cd2065cF9b'
+      address: '0xE9A5eba388e2C97bdE562450eF1EBd2fF1496E40'
       abi: DVMFactory
       startBlock: 1009968
     mapping:
@@ -126,7 +126,7 @@ dataSources:
     name: DPPFactory
     network: zero_testnet
     source:
-      address: "0xF75A640ab9c960f1780d475b3d38EA0C054AA542"
+      address: "0x97586Ddd7399E0FD80CEba80767d6F358189b59b"
       abi: DPPFactory
       startBlock: 1009968
     mapping:
@@ -157,7 +157,7 @@ dataSources:
     name: DSPFactory
     network: zero_testnet
     source:
-      address: '0xeb7D55C95fB2c801e781feb7dA1281C631B8EC3e'
+      address: '0x616c706FF4086ff412dA5084eb613BfC8476b831'
       abi: DSPFactory
       startBlock: 1009968
     mapping:
@@ -190,7 +190,7 @@ dataSources:
     name: GSPFactory
     network: zero_testnet
     source:
-      address: '0x8AA372360BD8319Efd6920Fb9BaB6a0A3680CCC7'
+      address: '0xeaC022E9BF4b49f9854725053f1658C3446a0317'
       abi: GSPFactory
       startBlock: 1009968
     mapping:
@@ -223,7 +223,7 @@ dataSources:
     name: CrowdPoolingFactory
     network: zero_testnet
     source:
-      address: '0x3768278C30212c9d88a43e6446e93d132b2841Be'
+      address: '0xf498144C6B13D76A3bCf74E9022040DC28cDB711'
       abi: CrowdPoolingFactory
       startBlock: 1009968
     mapping:

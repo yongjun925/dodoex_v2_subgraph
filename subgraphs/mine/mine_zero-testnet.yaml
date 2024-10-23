@@ -8,7 +8,7 @@ dataSources:
     name: DODOMineV3ProxyV2
     network: zero_testnet
     source:
-      address: '0xDD72edE95D824Db6f320B206Bf8315fD4aA2f32c'
+      address: '0x80E8d95b4bC179d1b4C87e742F4Bede1F2544f5d'
       abi: DODOMineV3ProxyV2
       startBlock: 1009968
     mapping:

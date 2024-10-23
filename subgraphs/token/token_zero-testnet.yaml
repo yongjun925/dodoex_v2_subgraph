@@ -8,7 +8,7 @@ dataSources:
     name: ERC20V3Factory
     network: zero_testnet
     source:
-      address: '0xE936FEf5939C6cbfd2fb821fF4163a9C3d6c3DC2'
+      address: '0xAe9C3f25c3759D41F2b55CcEb3E012AbCd0f0710'
       abi: ERC20V3Factory
       startBlock: 1009968
     mapping:
