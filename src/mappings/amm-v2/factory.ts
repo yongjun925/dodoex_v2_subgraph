@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { Address, log, BigInt } from "@graphprotocol/graph-ts";
+import { Address, log, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
 
 import { PairCreated } from "../../types/amm-v2/Factory/Factory";
 import { Bundle, Pair, Token, AMMFactory } from "../../types/amm-v2/schema";
@@ -143,12 +143,9 @@ export function handleNewPair(event: PairCreated): void {
   pair.i = ZERO_BI;
   pair.k = ZERO_BI;
   pair.lpMtRatio = BigInt.fromI32(6);
-  pair.mtFeeRate = event.params.feeRate.div(pair.lpMtRatio);
-  pair.feeRate = event.params.feeRate;
-  pair.lpFeeRate = convertTokenToDecimal(
-    pair.feeRate.minus(pair.mtFeeRate),
-    BigInt.fromI32(4)
-  );
+  pair.mtFeeRate = ZERO_BI;
+  pair.feeRate = ZERO_BI;
+  pair.lpFeeRate = BigDecimal.fromString("0.003");
   pair.untrackedBaseVolume = ZERO_BD;
   pair.untrackedQuoteVolume = ZERO_BD;
   pair.untrackedVolumeUSD = ZERO_BD;

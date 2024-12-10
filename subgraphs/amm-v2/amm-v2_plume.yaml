@@ -34,7 +34,7 @@ dataSources:
         - name: ERC20NameBytes
           file: ../../abis/amm-v2/ERC20NameBytes.json
       eventHandlers:
-        - event: PairCreated(indexed address,indexed address,address,uint256,uint256)
+        - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handleNewPair
 templates:
   - kind: ethereum/contract
@@ -72,7 +72,3 @@ templates:
           handler: handleTransfer
         - event: Sync(uint112,uint112)
           handler: handleSync
-        - event: FeeRateChange(uint256)
-          handler: handleFeeRateChange
-        - event: LpMtRatioChange(uint256)
-          handler: handleLpMtRatioChange

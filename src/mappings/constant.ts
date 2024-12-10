@@ -8,24 +8,24 @@ export const TYPE_GSP_POOL = "GSP";
 export const TYPE_CLASSICAL_POOL = "CLASSICAL";
 export const SOURCE_SMART_ROUTE = "SMART_ROUTE";
 export const SOURCE_POOL_SWAP = "DODO_POOL";
-export const DODOZooID = "dodoex-v2-neox";
+export const DODOZooID = "dodoex-v2-plume";
 export const CHAIN_BASE_COIN_SYMBOL = "ETH";
 export const CHAIN_BASE_COIN_NAME = "ethereum";
 export const DIP3_TIMESTAMP = 1624442400;
 
 export const SMART_ROUTE_ADDRESSES: string[] = [
-  "0x90e3C36f1c668d5c8fED3Bc7797e0c2e767EfBd2",
+  "0x928e9762B5223d5A2ac1F5b13E8A61907aCaa9Bd",
 ];
-export const DVM_FACTORY_ADDRESS = "0xE59d098c36916397Cc14AB42Bb0F00093BDA9f04";
-export const DPP_FACTORY_ADDRESS = "0x4d89ceaf1EACf83909e1CA0d508B132d7e204A5d";
+export const DVM_FACTORY_ADDRESS = "0xd0de7cA3298fff085E2cb82F8a861a0254256BA0";
+export const DPP_FACTORY_ADDRESS = "0xc6F5e5Ff8AbBe6A94A879A1E378c101E2A6bb9e6";
 export const CLASSIC_FACTORY_ADDRESS =
-  "0x9fEA2Ada0688B11138cEceA294CDF7d7564347Aa";
+  "0x8Ebbfe204E7EdA4be46b9d09c5dfa8b3e1500462";
 export const CROWDPOOLING_FACTORY_V2: string[] = [
-  "0x9fEA2Ada0688B11138cEceA294CDF7d7564347Aa",
+  "0x8Ebbfe204E7EdA4be46b9d09c5dfa8b3e1500462",
 ];
 
-export const DVM_FACTORY_DEPLOY_BLOCK = 868418;
-export const DPP_FACTORY_DEPLOY_BLOCK = 868418;
+export const DVM_FACTORY_DEPLOY_BLOCK = 54690;
+export const DPP_FACTORY_DEPLOY_BLOCK = 54690;
 
 export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 export const BASE_COIN = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
@@ -40,10 +40,10 @@ export const TRANSACTION_TYPE_CP_CLAIM = "CP_CLAIM";
 /**
  * usd pricing
  */
-export const WRAPPED_BASE_COIN = "0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF";
+export const WRAPPED_BASE_COIN = "0x562723560131C47417dfcD6BB1A089E4D7C7943C";
 //pricing supported stable coins
-export const STABLE_ONE_ADDRESS = "0x242D405a58F2358eC2810De195b31FbD0508bb18"; //usdt
-export const STABLE_TWO_ADDRESS = "0x68b55E582961968ef7758D8454D8A3e78c692e0B"; //usdc
+export const STABLE_ONE_ADDRESS = "0xb95ed7e958e196688984951f41ac2888f4b10ab9"; //usdt
+export const STABLE_TWO_ADDRESS = "0x46afe01d758a46d64c7d8e0791314d5db3e2e683"; //usdc
 //stable coins pairs
 export const STABLE_COIN_PAIR_ONE =
   "0xe8c1b7e0505c97c59ff2f12ebf91a8eaa59d4c73"; //[USDT_USDC_PAIR]
@@ -51,13 +51,13 @@ export const STABLE_COIN_PAIR_ONE =
 export const BASE_COIN_PAIR = "0x75f5d66a7bbb9330a9067c0833ec9b3198b71666"; //[WETH_USDC_PAIR]
 
 // AMM V2
-export const WETH_ADDRESS = "0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF";
-export const USDC_WETH_PAIR = "0x242D405a58F2358eC2810De195b31FbD0508bb18"; // usdc not found
-export const DAI_WETH_PAIR = "0x242D405a58F2358eC2810De195b31FbD0508bb18"; // dai not found
-export const USDT_WETH_PAIR = "0x242D405a58F2358eC2810De195b31FbD0508bb18"; // usdt
+export const WETH_ADDRESS = "0x562723560131C47417dfcD6BB1A089E4D7C7943C";
+export const USDC_WETH_PAIR = "0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48"; // usdc
+export const DAI_WETH_PAIR = "0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48"; // dai not found
+export const USDT_WETH_PAIR = "0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48"; // usdt not found
 // token where amounts should contribute to tracked volume and liquidity
 export let WHITELIST: string[] = [
-  "0xdE41591ED1f8ED1484aC2CD8ca0876428de60EfF", // WGAS
+  "0x562723560131C47417dfcD6BB1A089E4D7C7943C", // WETH
 ];
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
@@ -66,7 +66,7 @@ export let MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString("400000");
 // minimum liquidity for price to get tracked
 export let MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("2");
 
-export const FACTORY_ADDRESS = "0x3a64Ec3606FF7310E8fAd6FcC008e39705fB496d";
+export const FACTORY_ADDRESS = "0x8b09DB11ea380d6454D2592D334FFC319ce6EF3E";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);

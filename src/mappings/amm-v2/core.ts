@@ -26,8 +26,6 @@ import {
   Swap,
   Sync,
   Transfer,
-  FeeRateChange,
-  LpMtRatioChange,
 } from "../../types/amm-v2/templates/Pair/Pair";
 import {
   updatePairDayData,
@@ -882,38 +880,4 @@ export function handleSwap(event: Swap): void {
     orderHistory.updatedAt = event.block.timestamp;
     orderHistory.save();
   }
-}
-
-export function handleFeeRateChange(event: FeeRateChange): void {
-  let pair = Pair.load(event.address.toHexString())!;
-  let token0 = Token.load(pair.baseToken);
-  let token1 = Token.load(pair.quoteToken);
-  if (token0 === null || token1 === null) {
-    return;
-  }
-  pair.feeRate = event.params.feeRate;
-  pair.mtFeeRate = pair.feeRate.div(pair.lpMtRatio);
-  pair.lpFeeRate = convertTokenToDecimal(
-    pair.feeRate.minus(pair.mtFeeRate),
-    BigInt.fromI32(4)
-  );
-  pair.updatedAt = event.block.timestamp;
-  pair.save();
-}
-
-export function handleLpMtRatioChange(event: LpMtRatioChange): void {
-  let pair = Pair.load(event.address.toHexString())!;
-  let token0 = Token.load(pair.baseToken);
-  let token1 = Token.load(pair.quoteToken);
-  if (token0 === null || token1 === null) {
-    return;
-  }
-  pair.lpMtRatio = event.params.lpMtRatio;
-  pair.mtFeeRate = pair.feeRate.div(pair.lpMtRatio);
-  pair.lpFeeRate = convertTokenToDecimal(
-    pair.feeRate.minus(pair.mtFeeRate),
-    BigInt.fromI32(4)
-  );
-  pair.updatedAt = event.block.timestamp;
-  pair.save();
 }
