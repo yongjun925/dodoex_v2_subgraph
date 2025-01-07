@@ -13,9 +13,9 @@ dataSources:
     name: Factory
     network: plume-testnet
     source:
-      address: '0xB95eD7E958E196688984951F41Ac2888F4B10aB9'
+      address: '0x701Ac6fAD7850956f966a85655348ac1B7c93368'
       abi: Factory
-      startBlock: 8168551
+      startBlock: 9585092
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6

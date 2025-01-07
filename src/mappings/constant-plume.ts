@@ -66,7 +66,7 @@ export let MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString("400000");
 // minimum liquidity for price to get tracked
 export let MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("2");
 
-export const FACTORY_ADDRESS = "0x8b09DB11ea380d6454D2592D334FFC319ce6EF3E";
+export const FACTORY_ADDRESS = "0x2Ba2696c63fA8b67b395de6D12F849b17C3515F9";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);

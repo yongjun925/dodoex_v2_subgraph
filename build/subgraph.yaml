@@ -8,11 +8,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Factory
-    network: plume-testnet
+    network: plume
     source:
-      address: "0xB95eD7E958E196688984951F41Ac2888F4B10aB9"
+      address: "0x2Ba2696c63fA8b67b395de6D12F849b17C3515F9"
       abi: Factory
-      startBlock: 8168551
+      startBlock: 118186
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -36,7 +36,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pair
-    network: plume-testnet
+    network: plume
     source:
       abi: Pair
     mapping:
