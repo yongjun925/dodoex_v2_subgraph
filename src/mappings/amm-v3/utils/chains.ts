@@ -7,6 +7,13 @@ import {
 
 import { OPTIMISM_POOL_MAPPINGS } from "../backfill/poolMappings";
 import { StaticTokenDefinition } from "./staticTokenDefinition";
+import {
+  factoryAddress,
+  stablecoinAddresses,
+  USDC_WETH_03_POOL,
+  WETH_ADDRESS,
+  WHITELIST_TOKENS,
+} from "../../constant";
 
 export enum ChainId {
   ARBITRUM_ONE = 42161,
@@ -491,6 +498,19 @@ export function getSubgraphConfig(): SubgraphConfig {
         "0xaa8e23fb1079ea71e0a56f48a2aa51851d8433d0", // USDT
         "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", // UNI,
       ],
+      tokenOverrides: [],
+      poolsToSkip: [],
+      poolMappings: [],
+    };
+  } else if (selectedNetwork == TAIKO_NETWORK_NAME) {
+    return {
+      factoryAddress: factoryAddress,
+      stablecoinWrappedNativePoolAddress: USDC_WETH_03_POOL, // USDC/WETH 1% pool
+      stablecoinIsToken0: true,
+      wrappedNativeAddress: WETH_ADDRESS, // WETH
+      minimumNativeLocked: BigDecimal.fromString("1"),
+      stablecoinAddresses: stablecoinAddresses,
+      whitelistTokens: WHITELIST_TOKENS,
       tokenOverrides: [],
       poolsToSkip: [],
       poolMappings: [],

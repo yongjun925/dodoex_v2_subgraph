@@ -26,7 +26,11 @@ import {
   sqrtPriceX96ToTokenPrices,
 } from "../utils/pricing";
 import { SMART_ROUTE_ADDRESSES, SOURCE_POOL_SWAP } from "../../constant";
-import { createPair } from "../supplementaryData";
+import {
+  createPair,
+  updatePairDayData,
+  updatePairHourData,
+} from "../supplementaryData";
 
 export function handleSwap(event: SwapEvent): void {
   handleSwapHelper(event);
@@ -216,8 +220,18 @@ export function handleSwapHelper(
     // create Swap event
     const transaction = loadTransaction(event);
     const swap = new Swap(transaction.id + "-" + event.logIndex.toString());
-    swap.transaction = transaction.id;
+    swap.hash = event.transaction.hash.toHexString();
     swap.timestamp = transaction.timestamp;
+    swap.pair = pool.id;
+    swap.sender = event.params.sender;
+    swap.from = event.transaction.from;
+    swap.fromToken = token0.id;
+    swap.toToken = token1.id;
+    swap.to = event.params.recipient;
+    swap.logIndex = event.logIndex;
+    swap.amountIn = amount0Abs;
+    swap.amountOut = amount1Abs;
+    swap.transaction = transaction.id;
     swap.pool = pool.id;
     swap.token0 = pool.token0;
     swap.token1 = pool.token1;
@@ -323,6 +337,8 @@ export function handleSwapHelper(
     pool.updatedAt = event.block.timestamp;
     createPair(pool);
     pool.save();
+    updatePairHourData(poolHourData);
+    updatePairDayData(poolDayData);
 
     //Supplementary data
     let swapID = event.transaction.hash
@@ -350,8 +366,8 @@ export function handleSwapHelper(
       orderHistory.from = event.transaction.from;
       orderHistory.to = event.params.recipient;
       orderHistory.sender = event.params.recipient;
-      orderHistory.amountIn = amount0;
-      orderHistory.amountOut = amount1;
+      orderHistory.amountIn = amount0Abs;
+      orderHistory.amountOut = amount1Abs;
       orderHistory.logIndex = event.logIndex;
       orderHistory.tradingReward = ZERO_BD;
       orderHistory.volumeUSD = amountTotalUSDTracked;
