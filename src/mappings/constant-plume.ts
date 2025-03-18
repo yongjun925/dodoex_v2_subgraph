@@ -51,13 +51,13 @@ export const STABLE_COIN_PAIR_ONE =
 export const BASE_COIN_PAIR = "0x75f5d66a7bbb9330a9067c0833ec9b3198b71666"; //[WETH_USDC_PAIR]
 
 // AMM V2
-export const WETH_ADDRESS = "0x562723560131C47417dfcD6BB1A089E4D7C7943C";
-export const USDC_WETH_PAIR = "0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48"; // usdc
-export const DAI_WETH_PAIR = "0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48"; // dai not found
-export const USDT_WETH_PAIR = "0x28E0f0eed8d6A6a96033feEe8b2D7F32EB5CCc48"; // usdt not found
+export const WETH_ADDRESS = "0xEa237441c92CAe6FC17Caaf9a7acB3f953be4bd1";
+export const USDC_WETH_PAIR = "0x54FD4da2Fa19Cf0f63d8f93A6EA5BEd3F9C042C6"; // usdc
+export const DAI_WETH_PAIR = "0x54FD4da2Fa19Cf0f63d8f93A6EA5BEd3F9C042C6"; // dai not found
+export const USDT_WETH_PAIR = "0x54FD4da2Fa19Cf0f63d8f93A6EA5BEd3F9C042C6"; // usdt not found
 // token where amounts should contribute to tracked volume and liquidity
 export let WHITELIST: string[] = [
-  "0x562723560131C47417dfcD6BB1A089E4D7C7943C", // WETH
+  "0xEa237441c92CAe6FC17Caaf9a7acB3f953be4bd1", // WETH
 ];
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
@@ -66,7 +66,7 @@ export let MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString("400000");
 // minimum liquidity for price to get tracked
 export let MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString("2");
 
-export const FACTORY_ADDRESS = "0x2Ba2696c63fA8b67b395de6D12F849b17C3515F9";
+export const FACTORY_ADDRESS = "0xd2b80519a88937A412415bAF1b7Fb1855189EA36";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);
