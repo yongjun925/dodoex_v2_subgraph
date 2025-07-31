@@ -56,43 +56,43 @@ export function findEthPerToken(token: Token): BigDecimal {
     return ONE_BD;
   }
   // loop through whitelist and check if paired with any
-  for (let i = 0; i < WHITELIST.length; ++i) {
-    let pairAddressResult = factoryContract.try_getPair(
-      Address.fromString(token.id),
-      Address.fromString(WHITELIST[i]),
-      BigInt.fromI64(3000000000000000)
-    );
-    if (pairAddressResult.reverted) {
-      continue;
-    }
-    let pairAddress = pairAddressResult.value;
-    if (pairAddress.toHexString() != ADDRESS_ZERO) {
-      let pair = Pair.load(pairAddress.toHexString());
-      if (pair === null) {
-        continue;
-      }
-      if (
-        pair.baseToken == token.id &&
-        pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)
-      ) {
-        let token1 = Token.load(pair.quoteToken);
-        if (token1 === null) {
-          continue;
-        }
-        return pair.quoteTokenPrice.times(token1.derivedETH as BigDecimal); // return token1 per our token * Eth per token 1
-      }
-      if (
-        pair.quoteToken == token.id &&
-        pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)
-      ) {
-        let token0 = Token.load(pair.baseToken);
-        if (token0 === null) {
-          continue;
-        }
-        return pair.baseTokenPrice.times(token0.derivedETH as BigDecimal); // return token0 per our token * ETH per token 0
-      }
-    }
-  }
+  //   for (let i = 0; i < WHITELIST.length; ++i) {
+  //     let pairAddressResult = factoryContract.try_getPair(
+  //       Address.fromString(token.id),
+  //       Address.fromString(WHITELIST[i]),
+  //       BigInt.fromI64(3000000000000000)
+  //     );
+  //     if (pairAddressResult.reverted) {
+  //       continue;
+  //     }
+  //     let pairAddress = pairAddressResult.value;
+  //     if (pairAddress.toHexString() != ADDRESS_ZERO) {
+  //       let pair = Pair.load(pairAddress.toHexString());
+  //       if (pair === null) {
+  //         continue;
+  //       }
+  //       if (
+  //         pair.baseToken == token.id &&
+  //         pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)
+  //       ) {
+  //         let token1 = Token.load(pair.quoteToken);
+  //         if (token1 === null) {
+  //           continue;
+  //         }
+  //         return pair.quoteTokenPrice.times(token1.derivedETH as BigDecimal); // return token1 per our token * Eth per token 1
+  //       }
+  //       if (
+  //         pair.quoteToken == token.id &&
+  //         pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)
+  //       ) {
+  //         let token0 = Token.load(pair.baseToken);
+  //         if (token0 === null) {
+  //           continue;
+  //         }
+  //         return pair.baseTokenPrice.times(token0.derivedETH as BigDecimal); // return token0 per our token * ETH per token 0
+  //       }
+  //     }
+  //   }
   return ZERO_BD; // nothing was found return 0
 }
 

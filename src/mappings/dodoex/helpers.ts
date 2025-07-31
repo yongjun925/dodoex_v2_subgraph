@@ -532,7 +532,7 @@ export function updateVirtualPairVolume(
 export function createLpToken(
   address: Address,
   pair: Pair,
-  isUpdateTotalSupply: boolean = true
+  isUpdateTotalSupply: boolean = false
 ): LpToken {
   let lpToken = LpToken.load(address.toHexString());
 
@@ -556,7 +556,7 @@ export function createLpToken(
   }
 
   if (isUpdateTotalSupply || lpToken.symbol == "unknown") {
-    lpToken.totalSupply = fetchTokenTotalSupply(address);
+    // lpToken.totalSupply = fetchTokenTotalSupply(address);
   }
   return lpToken as LpToken;
 }
@@ -599,17 +599,26 @@ export function fetchPoolFeeRate(address: Address): BigDecimal {
 export function getPMMState(
   poolAddress: Address
 ): DVM__getPMMStateResultStateStruct | null {
-  let pair = Pair.load(poolAddress.toHexString());
-  if (pair != null && pair.type != TYPE_CLASSICAL_POOL) {
-    let pool = DVM.bind(poolAddress);
-    let pmmState = pool.try_getPMMState();
-    if (pmmState.reverted) {
-      log.warning("getPMMState reverted: {}", [poolAddress.toHexString()]);
-    } else {
-      return pmmState.value as DVM__getPMMStateResultStateStruct;
-    }
-  }
-  return null;
+  //   let pair = Pair.load(poolAddress.toHexString());
+  //   if (pair != null && pair.type != TYPE_CLASSICAL_POOL) {
+  //     let pool = DVM.bind(poolAddress);
+  //     let pmmState = pool.try_getPMMState();
+  //     if (pmmState.reverted) {
+  //       log.warning("getPMMState reverted: {}", [poolAddress.toHexString()]);
+  //     } else {
+  //       return pmmState.value as DVM__getPMMStateResultStateStruct;
+  //     }
+  //   }
+  //   return null;
+  let newPmmState = new DVM__getPMMStateResultStateStruct();
+  newPmmState.push(ethereum.Value.fromI32(0));
+  newPmmState.push(ethereum.Value.fromI32(0));
+  newPmmState.push(ethereum.Value.fromI32(0));
+  newPmmState.push(ethereum.Value.fromI32(0));
+  newPmmState.push(ethereum.Value.fromI32(0));
+  newPmmState.push(ethereum.Value.fromI32(0));
+  newPmmState.push(ethereum.Value.fromI32(0));
+  return newPmmState;
 }
 
 export function updatePairPmm(

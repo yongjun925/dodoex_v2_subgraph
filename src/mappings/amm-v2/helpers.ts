@@ -164,7 +164,7 @@ export function createUser(address: Address, timestamp: BigInt): User {
 export function createLpToken(
   address: Address,
   pair: Pair,
-  isUpdateTotalSupply: boolean = true
+  isUpdateTotalSupply: boolean = false
 ): LpToken {
   let lpToken = LpToken.load(address.toHexString());
   let decimals = fetchTokenDecimals(address);
@@ -186,7 +186,7 @@ export function createLpToken(
   }
 
   if (isUpdateTotalSupply || lpToken.symbol == "unknown") {
-    lpToken.totalSupply = fetchTokenTotalSupply(address);
+    // lpToken.totalSupply = fetchTokenTotalSupply(address);
   }
   lpToken.save();
   return lpToken as LpToken;
