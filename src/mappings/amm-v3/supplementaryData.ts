@@ -10,12 +10,6 @@ import {
   Token,
   User,
 } from "../../types/amm-v3/schema";
-import {
-  fetchTokenDecimals,
-  fetchTokenName,
-  fetchTokenSymbol,
-  fetchTokenTotalSupply,
-} from "./utils/token";
 import { ADDRESS_ZERO, BI_18, ZERO_BD, ZERO_BI } from "../constant";
 
 export function createPair(pool: Pool): Pair {
@@ -51,14 +45,14 @@ export function createPair(pool: Pool): Pair {
     pair.isTradeAllowed = true;
     pair.isDepositBaseAllowed = true;
     pair.isDepositQuoteAllowed = true;
+
+    let baseLpToken = createLpToken(Address.fromString(pool.id), pair, false);
+    baseLpToken.updatedAt = pool.updatedAt;
+    baseLpToken.save();
+    pair.baseLpToken = baseLpToken.id;
+    pair.quoteLpToken = baseLpToken.id;
   }
-  let baseLpToken = createLpToken(Address.fromString(pool.id), pair, false);
-  baseLpToken.updatedAt = pool.updatedAt;
-  baseLpToken.save();
-  baseLpToken.updatedAt = pool.updatedAt;
-  baseLpToken.save();
-  pair.baseLpToken = baseLpToken.id;
-  pair.quoteLpToken = baseLpToken.id;
+
   pair.baseReserve = pool.totalValueLockedToken0;
   pair.quoteReserve = pool.totalValueLockedToken1;
   //   pair.lastTradePrice = pool.token1Price.div(pool.token0Price);
@@ -84,27 +78,16 @@ export function createLpToken(
   isUpdateTotalSupply: boolean = false
 ): LpToken {
   let lpToken = LpToken.load(address.toHexString());
-  let decimals = fetchTokenDecimals(address, []);
 
   if (lpToken == null) {
     lpToken = new LpToken(address.toHexString());
-    lpToken.decimals = decimals;
-    lpToken.name = fetchTokenName(address, []);
-    lpToken.symbol = fetchTokenSymbol(address, []);
+    lpToken.decimals = BI_18;
+    lpToken.name = "AMM V3 LP Token";
+    lpToken.symbol = "AMM-V3-LP";
     lpToken.totalSupply = ZERO_BI;
     lpToken.pair = pair.id;
   }
 
-  //for V1 classical hardcode pools
-  if (lpToken.symbol == "unknown") {
-    lpToken.symbol = fetchTokenSymbol(address, []);
-    lpToken.name = fetchTokenName(address, []);
-    lpToken.decimals = decimals;
-  }
-
-  if (isUpdateTotalSupply || lpToken.symbol == "unknown") {
-    // lpToken.totalSupply = fetchTokenTotalSupply(address);
-  }
   lpToken.save();
   return lpToken as LpToken;
 }

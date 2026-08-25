@@ -26,6 +26,7 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidityEvent): void {
     log.error("Failed to get position data {}", [
       event.transaction.hash.toHexString(),
     ]);
+    return;
   }
   const position = positionRes.value;
   let liquidityTrackerId = event.transaction.hash
@@ -86,6 +87,7 @@ export function handleDecreaseLiquidity(event: DecreaseLiquidityEvent): void {
     log.error("Failed to get position data {}", [
       event.transaction.hash.toHexString(),
     ]);
+    return;
   }
   const position = positionRes.value;
   let liquidityTrackerId = event.transaction.hash

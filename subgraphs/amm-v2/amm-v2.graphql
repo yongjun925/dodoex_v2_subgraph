@@ -333,6 +333,10 @@ type Pair @entity {
   lpFeeRate: BigDecimal!
   feeRate: BigInt!
   lpMtRatio: BigInt!
+  "curator pool sequence length"
+  len: BigInt
+  "current curator address"
+  curator: Bytes
 
   "base LP token, for DPP is null, for dodo v1 lpToken is different"
   baseLpToken: LpToken

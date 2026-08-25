@@ -47,6 +47,7 @@ const ZORA_MAINNET_NETWORK_NAME = "zora-mainnet";
 const WORLDCHAIN_MAINNET_NETWORK_NAME = "worldchain-mainnet";
 const SEPOLIA_NETWORK_NAME = "sepolia";
 const TAIKO_NETWORK_NAME = "taiko";
+const PHAROS_NETWORK_NAME = "pharos";
 
 // Note: All token and pool addresses should be lowercased!
 export class SubgraphConfig {
@@ -499,6 +500,19 @@ export function getSubgraphConfig(): SubgraphConfig {
         "0xaa8e23fb1079ea71e0a56f48a2aa51851d8433d0", // USDT
         "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", // UNI,
       ],
+      tokenOverrides: [],
+      poolsToSkip: [],
+      poolMappings: [],
+    };
+  } else if (selectedNetwork == PHAROS_NETWORK_NAME) {
+    return {
+      factoryAddress: factoryAddress,
+      stablecoinWrappedNativePoolAddress: USDC_WETH_03_POOL,
+      stablecoinIsToken0: true,
+      wrappedNativeAddress: WETH_ADDRESS,
+      minimumNativeLocked: BigDecimal.fromString("1"),
+      stablecoinAddresses: stablecoinAddresses,
+      whitelistTokens: WHITELIST_TOKENS,
       tokenOverrides: [],
       poolsToSkip: [],
       poolMappings: [],
