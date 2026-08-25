@@ -17,7 +17,6 @@ program.option("-i, --ipfs <endpoint>", "ipfs server endpoint");
 program.option("-n, --node <endpoint>", "node server endpoint");
 program.option("-c, --chain <name>", "block chain");
 program.option("-a, --alpha", "is alpha");
-program.option("-d, --debug", "is debug", true);
 program.option("-y, --yaml <name>", "yaml file name");
 program.option("-u, --accesstoken <token>", "access token");
 
@@ -30,7 +29,6 @@ let ipfs = options.ipfs;
 let node = options.node;
 let chain = options.chain;
 let alpha = options.alpha;
-let debug = options.debug;
 let yaml = options.yaml;
 let accesstoken = options.accesstoken;
 
@@ -63,9 +61,11 @@ async function run() {
         name: "subgraph",
         message: "Please select the subgraph",
         choices: [
+          "amm-v2",
+          "amm-v3",
           "avatar",
           "dodoex",
-          "mime",
+          "mine",
           "nft",
           "starter",
           "token",
@@ -141,6 +141,8 @@ async function deploy() {
       subgraphName = `dodoex/dodo-avatar-${chain}`;
     } else if (subgraph === "mine") {
       subgraphName = `dodoex/dodoex-mine-v3-${chain}`;
+    } else if (subgraph === "amm-v2" || subgraph === "amm-v3") {
+      subgraphName = `${subgraph}-${chain}`;
     } else {
       subgraphName = `dodoex/dodoex-${subgraph}-${chain}`;
     }
@@ -151,16 +153,15 @@ async function deploy() {
   }
 
   let commands = "";
-  if (subgraph === "dodoex") {
-    commands += `cp ./src/mappings/constant-${chain}.ts ./src/mappings/constant.ts && `;
+  if (["dodoex", "amm-v2", "amm-v3"].includes(subgraph)) {
+    const constantChain = chain === "eth" ? "mainnet" : chain;
+    commands += `cp ./src/mappings/constant-${constantChain}.ts ./src/mappings/constant.ts && `;
   }
   const cli = target === "the graph" ? "graph" : "indexer";
   commands += `${cli} codegen ${yaml} --output-dir ./src/types/${subgraph}/  && `;
-  commands += `${cli} deploy ${
-    debug ? "--debug" : ""
-  } --ipfs ${ipfs} --node ${node} ${subgraphName} ${yaml}`;
+  commands += `${cli} deploy --ipfs ${ipfs} --node ${node} ${subgraphName} ${yaml}`;
   if (accesstoken) {
-    commands += `--access-token ${accesstoken}`;
+    commands += ` --access-token ${accesstoken}`;
   }
 
   const res = await inquirer.prompt({

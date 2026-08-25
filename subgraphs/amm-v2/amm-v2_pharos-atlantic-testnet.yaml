@@ -1,7 +1,5 @@
 specVersion: 0.0.4
 description: Dodoex.io
-features:
-  - grafting
 repository: https://github.com/DODOEX/amm_v2_subgraph
 schema:
   file: ./amm-v2.graphql
@@ -12,7 +10,7 @@ dataSources:
     source:
       address: "0x1d416077dC5a9721D4F7A57f2CbCCb0e65d8373E"
       abi: Factory
-      startBlock: 874548
+      startBlock: 28782238
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -39,7 +37,7 @@ dataSources:
     source:
       address: "0xD6E677064032F755986E779C9e6E7151d2D892bd"
       abi: FactoryCurator
-      startBlock: 28707173
+      startBlock: 28782238
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
