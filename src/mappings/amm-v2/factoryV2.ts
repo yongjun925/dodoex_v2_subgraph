@@ -3,8 +3,8 @@ import { Address, BigInt, log } from "@graphprotocol/graph-ts";
 import {
   PairCreated,
   PairCreatedCurator,
-} from "../../types/amm-v2/FactoryCurator/FactoryCurator";
-import { Pair as PairContract } from "../../types/amm-v2/FactoryCurator/Pair";
+} from "../../types/amm-v2/FactoryV2/FactoryV2";
+import { Pair as PairContract } from "../../types/amm-v2/FactoryV2/Pair";
 import { createPair, PairCreationInput } from "./pairCreation";
 
 const DEFAULT_LP_MT_RATIO = BigInt.fromI32(2);
@@ -26,8 +26,7 @@ export function handleNewCuratorPair(event: PairCreatedCurator): void {
     event.params.pair,
   );
   input.feeRate = event.params.feeRate;
-  input.len = event.params.len;
-  input.curator = event.params.curator;
+  input.curator = fetchLpMtCurator(event.params.pair);
   createPair(event, input);
 }
 
@@ -52,4 +51,16 @@ function fetchLpMtRatio(pair: Address): BigInt {
     DEFAULT_LP_MT_RATIO.toString(),
   ]);
   return DEFAULT_LP_MT_RATIO;
+}
+
+function fetchLpMtCurator(pair: Address): Address | null {
+  let result = PairContract.bind(pair).try_lpMtCurator();
+  if (!result.reverted) {
+    return result.value;
+  }
+
+  log.warning("lpMtCurator call reverted for pair {}, leave curator empty", [
+    pair.toHexString(),
+  ]);
+  return null;
 }

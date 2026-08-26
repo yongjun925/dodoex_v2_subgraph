@@ -333,8 +333,6 @@ type Pair @entity {
   lpFeeRate: BigDecimal!
   feeRate: BigInt!
   lpMtRatio: BigInt!
-  "curator pool sequence length"
-  len: BigInt
   "current curator address"
   curator: Bytes
 

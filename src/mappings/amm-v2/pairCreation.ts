@@ -19,7 +19,6 @@ export class PairCreationInput {
   pair: Address;
   feeRate: BigInt = ZERO_BI;
   lpMtRatio: BigInt = ZERO_BI;
-  len: BigInt | null = null;
   curator: Address | null = null;
 
   constructor(token0: Address, token1: Address, pair: Address) {
@@ -144,7 +143,6 @@ function initializePairIdentity(
   pair.createdAtBlockNumber = event.block.number;
   pair.i = ZERO_BI;
   pair.k = ZERO_BI;
-  if (input.len !== null) pair.len = input.len as BigInt;
   if (input.curator !== null) pair.curator = input.curator as Address;
 }
 

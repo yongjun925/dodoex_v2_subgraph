@@ -32,23 +32,23 @@ dataSources:
         - event: PairCreated(indexed address,indexed address,address,uint256,uint256)
           handler: handleNewPair
   - kind: ethereum/contract
-    name: FactoryCurator
+    name: FactoryV2
     network: pharos-atlantic-testnet
     source:
-      address: "0xD6E677064032F755986E779C9e6E7151d2D892bd"
-      abi: FactoryCurator
-      startBlock: 28782238
+      address: "0x8e98F11E71F519c39519603086AFfD8457D73d5d"
+      abi: FactoryV2
+      startBlock: 28818973
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ../../src/mappings/amm-v2/factoryCurator.ts
+      file: ../../src/mappings/amm-v2/factoryV2.ts
       entities:
         - Pair
         - Token
       abis:
-        - name: FactoryCurator
-          file: ../../abis/amm-v2/factory-curator.json
+        - name: FactoryV2
+          file: ../../abis/amm-v2/factory-v2.json
         - name: Pair
           file: ../../abis/amm-v2/pair.json
         - name: ERC20

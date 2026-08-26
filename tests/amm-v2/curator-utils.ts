@@ -8,7 +8,7 @@ import { PairCreated as LegacyPairCreated } from "../../src/types/amm-v2/Factory
 import {
   PairCreated,
   PairCreatedCurator,
-} from "../../src/types/amm-v2/FactoryCurator/FactoryCurator";
+} from "../../src/types/amm-v2/FactoryV2/FactoryV2";
 import { LpMtCuratorChange } from "../../src/types/amm-v2/templates/Pair/Pair";
 
 declare namespace _assert {
@@ -19,8 +19,8 @@ declare namespace _assert {
 export const LEGACY_FACTORY = Address.fromString(
   "0x1d416077dc5a9721d4f7a57f2cbccb0e65d8373e",
 );
-export const CURATOR_FACTORY = Address.fromString(
-  "0xd6e677064032f755986e779c9e6e7151d2d892bd",
+export const FACTORY_V2 = Address.fromString(
+  "0x8e98f11e71f519c39519603086affd8457d73d5d",
 );
 export const TOKEN0 = Address.fromString(
   "0x0000000000000000000000000000000000000011",
@@ -33,6 +33,9 @@ export const PAIR = Address.fromString(
 );
 export const CURATOR = Address.fromString(
   "0x00000000000000000000000000000000000000aa",
+);
+export const ONCHAIN_CURATOR = Address.fromString(
+  "0x00000000000000000000000000000000000000cc",
 );
 export const NEXT_CURATOR = Address.fromString(
   "0x00000000000000000000000000000000000000bb",
@@ -53,14 +56,14 @@ export function createLegacyPairCreated(): LegacyPairCreated {
 
 export function createPairCreated(): PairCreated {
   let event = changetype<PairCreated>(newMockEvent());
-  configureEvent(event, CURATOR_FACTORY);
+  configureEvent(event, FACTORY_V2);
   event.parameters = pairParameters(BigInt.fromI32(300));
   return event;
 }
 
 export function createPairCreatedCurator(): PairCreatedCurator {
   let event = changetype<PairCreatedCurator>(newMockEvent());
-  configureEvent(event, CURATOR_FACTORY);
+  configureEvent(event, FACTORY_V2);
   event.parameters = pairParameters(BigInt.fromI32(300)).concat([
     new ethereum.EventParam("curator", ethereum.Value.fromAddress(CURATOR)),
   ]);
@@ -126,6 +129,20 @@ export function mockLpMtRatio(ratio: i32): void {
   createMockedFunction(PAIR, "lpMtRatio", "lpMtRatio():(uint256)").returns([
     ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(ratio)),
   ]);
+}
+
+export function mockLpMtCurator(): void {
+  createMockedFunction(PAIR, "lpMtCurator", "lpMtCurator():(address)").returns([
+    ethereum.Value.fromAddress(ONCHAIN_CURATOR),
+  ]);
+}
+
+export function mockRevertedLpMtCurator(): void {
+  createMockedFunction(
+    PAIR,
+    "lpMtCurator",
+    "lpMtCurator():(address)",
+  ).reverts();
 }
 
 export function mockRevertedLpMtRatio(): void {

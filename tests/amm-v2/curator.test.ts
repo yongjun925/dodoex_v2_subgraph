@@ -12,11 +12,11 @@ import { handleNewPair as handleLegacyPair } from "../../src/mappings/amm-v2/fac
 import {
   handleNewCuratorPair,
   handleNewPair,
-} from "../../src/mappings/amm-v2/factoryCurator";
+} from "../../src/mappings/amm-v2/factoryV2";
 import { handleLpMtCuratorChange } from "../../src/mappings/amm-v2/curatorCore";
 import {
-  CURATOR,
   NEXT_CURATOR,
+  ONCHAIN_CURATOR,
   PAIR,
   assertPairTemplateCreated,
   createCuratorChange,
@@ -24,18 +24,20 @@ import {
   createPairCreated,
   createPairCreatedCurator,
   mockLpMtRatio,
+  mockLpMtCurator,
   mockPoolMetadata,
   mockRevertedLpMtRatio,
+  mockRevertedLpMtCurator,
 } from "./curator-utils";
 
 const ATLANTIC_FACTORY_ID = "0x1d416077dC5a9721D4F7A57f2CbCCb0e65d8373E";
 
-describe("AMMv2 curator factory", () => {
+describe("AMMv2 FactoryV2", () => {
   afterEach(() => {
     clearStore();
   });
 
-  test("keeps the legacy factory ratio and nullable curator fields", () => {
+  test("keeps the legacy factory ratio and nullable curator", () => {
     mockPoolMetadata();
 
     handleLegacyPair(createLegacyPairCreated());
@@ -44,11 +46,10 @@ describe("AMMv2 curator factory", () => {
     assert.fieldEquals("AMMFactory", ATLANTIC_FACTORY_ID, "pairCount", "1");
     assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "6");
     assert.fieldEquals("Pair", PAIR.toHexString(), "mtFeeRate", "50");
-    assert.booleanEquals(true, Pair.load(PAIR.toHexString())!.len === null);
     assert.booleanEquals(true, Pair.load(PAIR.toHexString())!.curator === null);
   });
 
-  test("indexes a regular curator-factory pool with its on-chain ratio", () => {
+  test("indexes a regular FactoryV2 pool with its on-chain ratio", () => {
     mockPoolMetadata();
     mockLpMtRatio(3);
 
@@ -59,31 +60,41 @@ describe("AMMv2 curator factory", () => {
     assert.fieldEquals("Pair", PAIR.toHexString(), "type", "AMMV2");
     assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "3");
     assert.fieldEquals("Pair", PAIR.toHexString(), "mtFeeRate", "100");
-    assert.booleanEquals(true, Pair.load(PAIR.toHexString())!.len === null);
     assert.booleanEquals(true, Pair.load(PAIR.toHexString())!.curator === null);
   });
 
-  test("stores curator metadata for a curator pool", () => {
+  test("stores the pair contract curator for a curator pool", () => {
     mockPoolMetadata();
     mockLpMtRatio(4);
+    mockLpMtCurator();
 
     handleNewCuratorPair(createPairCreatedCurator());
 
     assert.entityCount("Pair", 1);
     assertPairTemplateCreated();
-    assert.fieldEquals("Pair", PAIR.toHexString(), "len", "11");
     assert.fieldEquals(
       "Pair",
       PAIR.toHexString(),
       "curator",
-      CURATOR.toHexString(),
+      ONCHAIN_CURATOR.toHexString(),
     );
     assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "4");
+  });
+
+  test("leaves curator empty when the pair call reverts", () => {
+    mockPoolMetadata();
+    mockLpMtRatio(4);
+    mockRevertedLpMtCurator();
+
+    handleNewCuratorPair(createPairCreatedCurator());
+
+    assert.booleanEquals(true, Pair.load(PAIR.toHexString())!.curator === null);
   });
 
   test("updates the current curator after pair creation", () => {
     mockPoolMetadata();
     mockLpMtRatio(4);
+    mockLpMtCurator();
     handleNewCuratorPair(createPairCreatedCurator());
 
     handleLpMtCuratorChange(createCuratorChange());
@@ -101,6 +112,17 @@ describe("AMMv2 curator factory", () => {
     mockRevertedLpMtRatio();
 
     handleNewPair(createPairCreated());
+
+    assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "2");
+    assert.fieldEquals("Pair", PAIR.toHexString(), "mtFeeRate", "150");
+  });
+
+  test("falls back to ratio two for a curator pool", () => {
+    mockPoolMetadata();
+    mockRevertedLpMtRatio();
+    mockLpMtCurator();
+
+    handleNewCuratorPair(createPairCreatedCurator());
 
     assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "2");
     assert.fieldEquals("Pair", PAIR.toHexString(), "mtFeeRate", "150");
