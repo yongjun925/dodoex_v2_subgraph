@@ -30,8 +30,6 @@ import {
   mockRevertedLpMtCurator,
 } from "./curator-utils";
 
-const ATLANTIC_FACTORY_ID = "0x1d416077dC5a9721D4F7A57f2CbCCb0e65d8373E";
-
 describe("AMMv2 FactoryV2", () => {
   afterEach(() => {
     clearStore();
@@ -42,8 +40,7 @@ describe("AMMv2 FactoryV2", () => {
 
     handleLegacyPair(createLegacyPairCreated());
 
-    assert.stringEquals(ATLANTIC_FACTORY_ID, FACTORY_ADDRESS);
-    assert.fieldEquals("AMMFactory", ATLANTIC_FACTORY_ID, "pairCount", "1");
+    assert.fieldEquals("AMMFactory", FACTORY_ADDRESS, "pairCount", "1");
     assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "6");
     assert.fieldEquals("Pair", PAIR.toHexString(), "mtFeeRate", "50");
     assert.booleanEquals(true, Pair.load(PAIR.toHexString())!.curator === null);
@@ -56,7 +53,7 @@ describe("AMMv2 FactoryV2", () => {
     handleNewPair(createPairCreated());
 
     assert.entityCount("Pair", 1);
-    assert.fieldEquals("AMMFactory", ATLANTIC_FACTORY_ID, "pairCount", "1");
+    assert.fieldEquals("AMMFactory", FACTORY_ADDRESS, "pairCount", "1");
     assert.fieldEquals("Pair", PAIR.toHexString(), "type", "AMMV2");
     assert.fieldEquals("Pair", PAIR.toHexString(), "lpMtRatio", "3");
     assert.fieldEquals("Pair", PAIR.toHexString(), "mtFeeRate", "100");
