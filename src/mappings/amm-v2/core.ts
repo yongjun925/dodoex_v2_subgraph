@@ -661,6 +661,17 @@ export function handleSwap(event: Swap): void {
     token1.decimals
   );
 
+  let swapFromToken = pair.baseToken;
+  let swapToToken = pair.quoteToken;
+  let swapAmountIn = amount0In;
+  let swapAmountOut = amount1Out;
+  if (!amount0In.gt(ZERO_BD)) {
+    swapFromToken = pair.quoteToken;
+    swapToToken = pair.baseToken;
+    swapAmountIn = amount1In;
+    swapAmountOut = amount0Out;
+  }
+
   // totals for volume updates
   let amount0Total = amount0Out.plus(amount0In);
   let amount1Total = amount1Out.plus(amount1In);
@@ -765,16 +776,16 @@ export function handleSwap(event: Swap): void {
   swap.sender = event.params.sender;
   swap.from = event.transaction.from;
   swap.to = event.params.to;
-  swap.fromToken = pair.baseToken;
-  swap.toToken = pair.quoteToken;
+  swap.fromToken = swapFromToken;
+  swap.toToken = swapToToken;
   swap.to = event.params.to;
   swap.logIndex = event.logIndex;
   swap.amount0In = amount0In;
-  swap.amountIn = amount0In;
+  swap.amountIn = swapAmountIn;
   swap.amount1In = amount1In;
   swap.amount0Out = amount0Out;
   swap.amount1Out = amount1Out;
-  swap.amountOut = amount1Out;
+  swap.amountOut = swapAmountOut;
   swap.from = event.transaction.from;
   // use the tracked amount if we have it
   swap.amountUSD =
@@ -869,13 +880,13 @@ export function handleSwap(event: Swap): void {
     orderHistory.hash = event.transaction.hash.toHexString();
     orderHistory.timestamp = event.block.timestamp;
     orderHistory.block = event.block.number;
-    orderHistory.fromToken = token0.id;
-    orderHistory.toToken = token1.id;
+    orderHistory.fromToken = swapFromToken;
+    orderHistory.toToken = swapToToken;
     orderHistory.from = event.transaction.from;
     orderHistory.to = event.params.to;
     orderHistory.sender = event.params.to;
-    orderHistory.amountIn = amount0In;
-    orderHistory.amountOut = amount1Out;
+    orderHistory.amountIn = swapAmountIn;
+    orderHistory.amountOut = swapAmountOut;
     orderHistory.logIndex = event.logIndex;
     orderHistory.tradingReward = ZERO_BD;
     orderHistory.volumeUSD = trackedAmountUSD;
