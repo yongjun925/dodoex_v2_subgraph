@@ -47,3 +47,5 @@ export const BASE_COIN_PAIR = "0xfe176a2b1e1f67250d2903b8d25f56c0dabcd6b2"; //[W
 export const CROWDPOOLING_FACTORY_V2: string[] = [
   "0x424976b3997514afa7c5122d053b8973f225d9db",
 ];
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;

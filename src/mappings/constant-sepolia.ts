@@ -101,3 +101,5 @@ export let UNTRACKED_PAIRS: string[] = [
 ];
 
 // AMM V3
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;

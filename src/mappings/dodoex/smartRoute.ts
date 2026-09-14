@@ -19,7 +19,11 @@ import {
   updateVirtualPairVolume,
   updateTokenTraderCount,
 } from "./helpers";
-import { SOURCE_SMART_ROUTE, TRANSACTION_TYPE_SWAP } from "../constant";
+import {
+  ENABLE_ORDER_HISTORY_TRIM,
+  SOURCE_SMART_ROUTE,
+  TRANSACTION_TYPE_SWAP,
+} from "../constant";
 import { Address, BigInt, dataSource, store } from "@graphprotocol/graph-ts";
 import {
   trimTokenData,
@@ -97,35 +101,37 @@ export function handleOrderHistory(event: OrderHistoryV2): void {
   toToken.txCount = toToken.txCount.plus(ONE_BI);
 
   //3、trim
-  for (let i = BigInt.fromI32(0); i.lt(event.logIndex); i = i.plus(ONE_BI)) {
-    let orderHistoryAboveID = event.transaction.hash
-      .toHexString()
-      .concat("-")
-      .concat(i.toString());
-    let orderHistoryAbove = OrderHistory.load(orderHistoryAboveID);
-    if (orderHistoryAbove != null) {
-      trimTokenData(
-        createToken(Address.fromString(orderHistoryAbove.fromToken), event),
-        orderHistoryAbove.amountIn,
-        orderHistoryAbove.fromToken === fromToken.id
-          ? ZERO_BD
-          : orderHistoryAbove.amountIn,
-        orderHistoryAbove.volumeUSD,
-        event
-      );
-      trimTokenData(
-        createToken(Address.fromString(orderHistoryAbove.toToken), event),
-        orderHistoryAbove.amountOut,
-        orderHistoryAbove.toToken === toToken.id
-          ? ZERO_BD
-          : orderHistoryAbove.amountOut,
-        orderHistoryAbove.volumeUSD,
-        event
-      );
-      decreaseVolumeAndFee(event, orderHistoryAbove.volumeUSD, ZERO_BD);
+  if (ENABLE_ORDER_HISTORY_TRIM) {
+    for (let i = BigInt.fromI32(0); i.lt(event.logIndex); i = i.plus(ONE_BI)) {
+      let orderHistoryAboveID = event.transaction.hash
+        .toHexString()
+        .concat("-")
+        .concat(i.toString());
+      let orderHistoryAbove = OrderHistory.load(orderHistoryAboveID);
+      if (orderHistoryAbove != null) {
+        trimTokenData(
+          createToken(Address.fromString(orderHistoryAbove.fromToken), event),
+          orderHistoryAbove.amountIn,
+          orderHistoryAbove.fromToken === fromToken.id
+            ? ZERO_BD
+            : orderHistoryAbove.amountIn,
+          orderHistoryAbove.volumeUSD,
+          event
+        );
+        trimTokenData(
+          createToken(Address.fromString(orderHistoryAbove.toToken), event),
+          orderHistoryAbove.amountOut,
+          orderHistoryAbove.toToken === toToken.id
+            ? ZERO_BD
+            : orderHistoryAbove.amountOut,
+          orderHistoryAbove.volumeUSD,
+          event
+        );
+        decreaseVolumeAndFee(event, orderHistoryAbove.volumeUSD, ZERO_BD);
 
-      store.remove("OrderHistory", orderHistoryAboveID);
-      trim = true;
+        store.remove("OrderHistory", orderHistoryAboveID);
+        trim = true;
+      }
     }
   }
 

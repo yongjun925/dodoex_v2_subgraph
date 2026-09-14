@@ -47,3 +47,5 @@ export const STABLE_COIN_PAIR_ONE =
   "0x1053152a60abec125f96f13a980ef469048f978f"; //[USDT_BUSD_PAIR]
 //base currency pair
 export const BASE_COIN_PAIR = "0x294c1e26eb5c26fb78eff91b9d662d3ed3b63425"; //[WBNB_USDC_PAIR]
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;

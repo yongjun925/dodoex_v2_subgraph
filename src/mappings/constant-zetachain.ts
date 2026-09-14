@@ -80,3 +80,5 @@ export const factoryAddress = "0x9f48Ddad075e569cDc70D657D3aC171e23846009";
 export const WHITELIST_TOKENS: string[] = WHITELIST;
 export const USDC_WETH_03_POOL = "0x4e0a1d4f6c2548550a983a0c446dd67abd00869d";
 export const stablecoinAddresses: string[] = [];
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;

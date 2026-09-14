@@ -75,3 +75,5 @@ export const factoryAddress = "${UniswapV3Factory}";
 export const WHITELIST_TOKENS: string[] = WHITELIST;
 export const USDC_WETH_03_POOL = "${USDC_WETH_03_POOL}";
 export const stablecoinAddresses: string[] = [];
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;

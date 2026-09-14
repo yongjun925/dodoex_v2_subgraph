@@ -48,3 +48,5 @@ export const STABLE_COIN_PAIR_ONE =
   "0xc9f93163c99695c6526b799ebca2207fdf7d61ad"; //[USDT_USDC_PAIR]
 //base currency pair todo
 export const BASE_COIN_PAIR = "0x75c23271661d9d143dcb617222bc4bec783eff34"; //[WETH_USDC_PAIR]
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;

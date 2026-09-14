@@ -91,3 +91,5 @@ export const stablecoinAddresses: string[] = [
   "0x779Ded0c9e1022225f8E0630b35a9b54bE713736", // USDC
   "0x779Ded0c9e1022225f8E0630b35a9b54bE713736", // USDT
 ];
+
+export const ENABLE_ORDER_HISTORY_TRIM = false;
