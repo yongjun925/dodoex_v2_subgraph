@@ -1,8 +1,8 @@
 specVersion: 0.0.4
 description: Dodoex.io
 graft:
-  base: QmPbz2uYz3qYRaESrfRoYTWJkYfoMqThezodYfrcVEmooK
-  block: 15988988
+  base: QmZeoTwcmcKjUs6SzAMf3J9Rma9Lzcy3Vp4PHBrmzWzrab
+  block: 17606000
 features:
   - grafting
 repository: https://github.com/DODOEX/amm_v2_subgraph
@@ -40,9 +40,9 @@ dataSources:
     name: FactoryV2
     network: pharos
     source:
-      address: "0x9916b96c366B0eF28cADD855f820AD9f274e72f3"
+      address: "0x9343D6F1a7058a9ffD43028666dB23CFcE3E0D1e"
       abi: FactoryV2
-      startBlock: 15988988
+      startBlock: 17214310
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
