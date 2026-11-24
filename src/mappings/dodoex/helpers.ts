@@ -837,25 +837,45 @@ export function updateUserDayDataAndDodoDayData(
 
 export function fetchIsOvercapStop(address: Address): boolean {
   const cpV2Contract = CPV2.bind(address);
-  return cpV2Contract._IS_OVERCAP_STOP();
+  let result = cpV2Contract.try__IS_OVERCAP_STOP();
+  if (result.reverted) {
+    return false;
+  }
+  return result.value;
 }
 
 export function fetchCpPoolFeeRate(address: Address): BigInt {
   const cpV2Contract = CPV2.bind(address);
-  return cpV2Contract._POOL_FEE_RATE_();
+  let result = cpV2Contract.try__POOL_FEE_RATE_();
+  if (result.reverted) {
+    return ZERO_BI;
+  }
+  return result.value;
 }
 
 export function fetchTokenCliffRate(address: Address): BigInt {
   const cpV2Contract = CPV2.bind(address);
-  return cpV2Contract._TOKEN_CLIFF_RATE_();
+  let result = cpV2Contract.try__TOKEN_CLIFF_RATE_();
+  if (result.reverted) {
+    return ZERO_BI;
+  }
+  return result.value;
 }
 
 export function fetchTokenClaimDuration(address: Address): BigInt {
   const cpV2Contract = CPV2.bind(address);
-  return cpV2Contract._TOKEN_CLAIM_DURATION_();
+  let result = cpV2Contract.try__TOKEN_CLAIM_DURATION_();
+  if (result.reverted) {
+    return ZERO_BI;
+  }
+  return result.value;
 }
 
 export function fetchTokenVestingDuration(address: Address): BigInt {
   const cpV2Contract = CPV2.bind(address);
-  return cpV2Contract._TOKEN_VESTING_DURATION_();
+  let result = cpV2Contract.try__TOKEN_VESTING_DURATION_();
+  if (result.reverted) {
+    return ZERO_BI;
+  }
+  return result.value;
 }

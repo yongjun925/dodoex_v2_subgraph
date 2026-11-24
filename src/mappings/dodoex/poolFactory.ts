@@ -116,15 +116,15 @@ export function handleNewDVM(event: NewDVM): void {
       pair.k = pmmState.value.K;
       pair.baseReserve = convertTokenToDecimal(
         pmmState.value.B,
-        baseToken.decimals
+        baseToken.decimals,
       );
       pair.quoteReserve = convertTokenToDecimal(
         pmmState.value.Q,
-        quoteToken.decimals
+        quoteToken.decimals,
       );
       pair.lpFeeRate = convertTokenToDecimal(
         dvm._LP_FEE_RATE_(),
-        BigInt.fromI32(18)
+        BigInt.fromI32(18),
       );
       let mtFeeRateModel = dvm.try__MT_FEE_RATE_MODEL_();
       if (mtFeeRateModel.reverted == false) {
@@ -205,15 +205,15 @@ export function handleNewDPP(event: NewDPP): void {
       pair.k = pmmState.value.K;
       pair.baseReserve = convertTokenToDecimal(
         pmmState.value.B,
-        baseToken.decimals
+        baseToken.decimals,
       );
       pair.quoteReserve = convertTokenToDecimal(
         pmmState.value.Q,
-        quoteToken.decimals
+        quoteToken.decimals,
       );
       pair.lpFeeRate = convertTokenToDecimal(
         dpp._LP_FEE_RATE_(),
-        BigInt.fromI32(18)
+        BigInt.fromI32(18),
       );
       let mtFeeRateModel = dpp.try__MT_FEE_RATE_MODEL_();
       if (mtFeeRateModel.reverted == false) {
@@ -302,15 +302,15 @@ export function handleNewDSP(event: NewDSP): void {
       pair.k = pmmState.value.K;
       pair.baseReserve = convertTokenToDecimal(
         pmmState.value.B,
-        baseToken.decimals
+        baseToken.decimals,
       );
       pair.quoteReserve = convertTokenToDecimal(
         pmmState.value.Q,
-        quoteToken.decimals
+        quoteToken.decimals,
       );
       pair.lpFeeRate = convertTokenToDecimal(
         dsp._LP_FEE_RATE_(),
-        BigInt.fromI32(18)
+        BigInt.fromI32(18),
       );
       let mtFeeRateModel = dsp.try__MT_FEE_RATE_MODEL_();
       if (mtFeeRateModel.reverted == false) {
@@ -353,6 +353,34 @@ export function handleNewCP(event: NewCP): void {
 
   let crowdPooling = CrowdPooling.load(event.params.cp.toHexString());
   if (crowdPooling == null) {
+    let cp = CP.bind(event.params.cp);
+    let bidStartTime = cp.try__PHASE_BID_STARTTIME_();
+    let bidEndTime = cp.try__PHASE_BID_ENDTIME_();
+    let calmEndTime = cp.try__PHASE_CALM_ENDTIME_();
+    let freezeDuration = cp.try__FREEZE_DURATION_();
+    let vestingDuration = cp.try__VESTING_DURATION_();
+    let i = cp.try__I_();
+    let k = cp.try__K_();
+    let totalBase = cp.try__TOTAL_BASE_();
+    let poolQuoteCap = cp.try__POOL_QUOTE_CAP_();
+    if (
+      bidStartTime.reverted ||
+      bidEndTime.reverted ||
+      calmEndTime.reverted ||
+      freezeDuration.reverted ||
+      vestingDuration.reverted ||
+      i.reverted ||
+      k.reverted ||
+      totalBase.reverted ||
+      poolQuoteCap.reverted
+    ) {
+      log.error("NewCP for invalid cp contract {}, tx {}, skipped", [
+        event.params.cp.toHexString(),
+        event.transaction.hash.toHexString(),
+      ]);
+      return;
+    }
+
     crowdPooling = new CrowdPooling(event.params.cp.toHexString());
     crowdPooling.version = ONE_BI;
     if (
@@ -363,10 +391,10 @@ export function handleNewCP(event: NewCP): void {
       crowdPooling.feeRate = fetchCpPoolFeeRate(event.params.cp);
       crowdPooling.tokenCliffRate = fetchTokenCliffRate(event.params.cp);
       crowdPooling.tokenClaimDuration = fetchTokenClaimDuration(
-        event.params.cp
+        event.params.cp,
       );
       crowdPooling.tokenVestingDuration = fetchTokenVestingDuration(
-        event.params.cp
+        event.params.cp,
       );
       CPV2Template.create(event.params.cp);
     } else {
@@ -375,17 +403,16 @@ export function handleNewCP(event: NewCP): void {
     crowdPooling.creator = event.params.creator;
     crowdPooling.createTime = event.block.timestamp;
     crowdPooling.totalShares = ZERO_BD;
-    let cp = CP.bind(event.params.cp);
     crowdPooling.creator = event.params.creator;
     crowdPooling.baseToken = event.params.baseToken.toHexString();
     crowdPooling.quoteToken = event.params.quoteToken.toHexString();
-    crowdPooling.bidStartTime = cp._PHASE_BID_STARTTIME_();
-    crowdPooling.bidEndTime = cp._PHASE_BID_ENDTIME_();
-    crowdPooling.calmEndTime = cp._PHASE_CALM_ENDTIME_();
-    crowdPooling.freezeDuration = cp._FREEZE_DURATION_();
-    crowdPooling.vestingDuration = cp._VESTING_DURATION_();
-    crowdPooling.i = cp._I_();
-    crowdPooling.k = cp._K_();
+    crowdPooling.bidStartTime = bidStartTime.value;
+    crowdPooling.bidEndTime = bidEndTime.value;
+    crowdPooling.calmEndTime = calmEndTime.value;
+    crowdPooling.freezeDuration = freezeDuration.value;
+    crowdPooling.vestingDuration = vestingDuration.value;
+    crowdPooling.i = i.value;
+    crowdPooling.k = k.value;
     let mtFeeRateModel = cp.try__MT_FEE_RATE_MODEL_();
     if (mtFeeRateModel.reverted == false) {
       crowdPooling.mtFeeRateModel = mtFeeRateModel.value;
@@ -395,12 +422,12 @@ export function handleNewCP(event: NewCP): void {
 
     crowdPooling.investorsCount = ZERO_BI;
     crowdPooling.totalBase = convertTokenToDecimal(
-      cp._TOTAL_BASE_(),
-      baseToken.decimals
+      totalBase.value,
+      baseToken.decimals,
     );
     crowdPooling.poolQuoteCap = convertTokenToDecimal(
-      cp._POOL_QUOTE_CAP_(),
-      quoteToken.decimals
+      poolQuoteCap.value,
+      quoteToken.decimals,
     );
     crowdPooling.poolQuote = ZERO_BD;
     crowdPooling.settled = false;
@@ -468,15 +495,15 @@ export function handleNewRegistry(event: NewRegistry): void {
       pair.k = pmmState.value.K;
       pair.baseReserve = convertTokenToDecimal(
         pmmState.value.B,
-        baseToken.decimals
+        baseToken.decimals,
       );
       pair.quoteReserve = convertTokenToDecimal(
         pmmState.value.Q,
-        quoteToken.decimals
+        quoteToken.decimals,
       );
       pair.lpFeeRate = convertTokenToDecimal(
         dvm._LP_FEE_RATE_(),
-        BigInt.fromI32(18)
+        BigInt.fromI32(18),
       );
       let mtFeeRateModel = dvm.try__MT_FEE_RATE_MODEL_();
       if (mtFeeRateModel.reverted == false) {
